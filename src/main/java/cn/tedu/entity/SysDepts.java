@@ -1,5 +1,7 @@
 package cn.tedu.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,10 +9,11 @@ import java.util.Date;
  * 部门管理(SysDepts)实体类
  *
  * @author makejava
- * @since 2020-07-10 16:38:04
+ * @since 2020-07-10 16:56:42
  */
+@Data
 public class SysDepts implements Serializable {
-    private static final long serialVersionUID = -92234941970643262L;
+    private static final long serialVersionUID = -59358674543264217L;
 
     private Integer id;
     /**

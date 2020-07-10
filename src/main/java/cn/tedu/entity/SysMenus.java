@@ -1,5 +1,7 @@
 package cn.tedu.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,10 +9,11 @@ import java.util.Date;
  * 资源管理(SysMenus)实体类
  *
  * @author makejava
- * @since 2020-07-10 16:38:12
+ * @since 2020-07-10 16:56:43
  */
+@Data
 public class SysMenus implements Serializable {
-    private static final long serialVersionUID = 309787307410686506L;
+    private static final long serialVersionUID = 808370860595569121L;
 
     private Integer id;
     /**

@@ -1,15 +1,18 @@
 package cn.tedu.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * 用户与角色对应关系(SysUserRoles)实体类
  *
  * @author makejava
- * @since 2020-07-10 16:38:22
+ * @since 2020-07-10 16:56:44
  */
+@Data
 public class SysUserRoles implements Serializable {
-    private static final long serialVersionUID = 977109174788733993L;
+    private static final long serialVersionUID = -23610421560128420L;
 
     private Integer id;
     /**

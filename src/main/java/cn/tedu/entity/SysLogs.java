@@ -1,5 +1,7 @@
 package cn.tedu.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,10 +9,11 @@ import java.util.Date;
  * 系统日志(SysLogs)实体类
  *
  * @author makejava
- * @since 2020-07-10 16:38:10
+ * @since 2020-07-10 16:56:43
  */
+@Data
 public class SysLogs implements Serializable {
-    private static final long serialVersionUID = 102009607726883099L;
+    private static final long serialVersionUID = 334918830373580962L;
 
     private Long id;
     /**

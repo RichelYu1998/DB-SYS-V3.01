@@ -1,5 +1,7 @@
 package cn.tedu.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,10 +9,11 @@ import java.util.Date;
  * 系统用户(SysUsers)实体类
  *
  * @author makejava
- * @since 2020-07-10 16:38:24
+ * @since 2020-07-10 16:56:45
  */
+@Data
 public class SysUsers implements Serializable {
-    private static final long serialVersionUID = -18641676791949127L;
+    private static final long serialVersionUID = 325594955302027637L;
 
     private Integer id;
     /**

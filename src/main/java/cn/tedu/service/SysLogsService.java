@@ -1,6 +1,8 @@
 package cn.tedu.service;
 
+import cn.tedu.entity.PageObject;
 import cn.tedu.entity.SysLogs;
+import com.google.protobuf.ServiceException;
 
 import java.util.List;
 
@@ -52,5 +54,13 @@ public interface SysLogsService {
      * @return 是否成功
      */
     boolean deleteById(Long id);
-
+    /**
+     * @param username 基于条件查询时的参数名
+     * @param pageCurrent 当前的页码值
+     * @return 当前页记录+分页信息
+     */
+    PageObject<SysLogs> findPageObjects(
+            String username,
+            Integer pageCurrent
+    ) throws ServiceException;
 }

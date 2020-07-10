@@ -13,6 +13,8 @@ import java.util.Date;
  */
 @Data
 public class SysLogs implements Serializable {
+    //将对象序列化时会将id作为版本写入到字节中
+    //将字节反序列化会从字节中提取版本号然后进行比对，一致则进行处理
     private static final long serialVersionUID = 334918830373580962L;
 
     private Long id;

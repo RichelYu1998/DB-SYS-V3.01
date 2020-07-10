@@ -64,5 +64,21 @@ public interface SysLogsDao {
      * @return 影响行数
      */
     int deleteById(Long id);
-
+    /**
+     * @param username 查询条件(例如查询哪个用户的日志信息)
+     * @return 总记录数(基于这个结果可以计算总页数)
+     */
+    int getRowCount(@Param("username")String username);
+    /**
+     * @param username 查询条件(例如查询哪个用户的日志信息)
+     * @param startIndex 当前页的起始位置
+     * @param pageSize 当前页的页面大小
+     * @return 当前页的日志记录信息
+     * 数据库中每条日志信息封装到一个 SysLog 对象中
+     */
+    List<SysLogs> findPageObjects(
+            @Param("username")String username,
+            @Param("startIndex")Integer startIndex,
+            @Param("pageSize") int pageSize
+    );
 }

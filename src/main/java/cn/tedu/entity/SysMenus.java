@@ -7,10 +7,10 @@ import java.util.Date;
  * 资源管理(SysMenus)实体类
  *
  * @author makejava
- * @since 2020-07-10 14:34:30
+ * @since 2020-07-10 16:38:12
  */
 public class SysMenus implements Serializable {
-    private static final long serialVersionUID = -70881408924829650L;
+    private static final long serialVersionUID = 309787307410686506L;
 
     private Integer id;
     /**

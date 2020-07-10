@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * 系统日志(SysLogs)表控制层
  *
  * @author makejava
- * @since 2020-07-10 14:34:29
+ * @since 2020-07-10 16:38:11
  */
 @RestController
 @RequestMapping("sysLogs")

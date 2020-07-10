@@ -7,10 +7,10 @@ import java.util.Date;
  * 系统用户(SysUsers)实体类
  *
  * @author makejava
- * @since 2020-07-10 14:34:38
+ * @since 2020-07-10 16:38:24
  */
 public class SysUsers implements Serializable {
-    private static final long serialVersionUID = -69655723672084816L;
+    private static final long serialVersionUID = -18641676791949127L;
 
     private Integer id;
     /**

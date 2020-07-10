@@ -10,7 +10,7 @@ import java.util.List;
  * 资源管理(SysMenus)表数据库访问层
  *
  * @author makejava
- * @since 2020-07-10 14:34:30
+ * @since 2020-07-10 16:38:12
  */
 @Mapper
 public interface SysMenusDao {

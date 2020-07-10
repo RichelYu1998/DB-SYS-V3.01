@@ -6,10 +6,10 @@ import java.io.Serializable;
  * 角色与菜单对应关系(SysRoleMenus)实体类
  *
  * @author makejava
- * @since 2020-07-10 14:34:32
+ * @since 2020-07-10 16:38:16
  */
 public class SysRoleMenus implements Serializable {
-    private static final long serialVersionUID = 210793703220398786L;
+    private static final long serialVersionUID = 385932041983611574L;
 
     private Integer id;
     /**

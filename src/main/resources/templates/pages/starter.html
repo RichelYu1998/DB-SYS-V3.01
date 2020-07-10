@@ -430,10 +430,10 @@ desired effect
       });
       
       function doLoadUI(id,url){
-    	  //var dom=document.getElementById(id);
-    	  //dom.onclick=function(){
-    		//  $("#mainContentId").load(url); 
-    	  //}
+    	  var dom=document.getElementById(id);
+    	  dom.onclick=function(){
+    		  $("#mainContentId").load(url);
+    	  }
     	  $("#"+id).click(function(){//事件处理函数
     		  console.log("====");
     		  //load函数为一个jquery中的ajax函数,其作用是将url对应的资源，异步加载到指定位置

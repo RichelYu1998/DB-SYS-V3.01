@@ -7,10 +7,10 @@ import java.util.Date;
  * 系统日志(SysLogs)实体类
  *
  * @author makejava
- * @since 2020-07-10 14:34:27
+ * @since 2020-07-10 16:38:10
  */
 public class SysLogs implements Serializable {
-    private static final long serialVersionUID = -70694560955413867L;
+    private static final long serialVersionUID = 102009607726883099L;
 
     private Long id;
     /**

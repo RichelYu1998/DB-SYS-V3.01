@@ -10,7 +10,7 @@ import java.util.List;
  * 角色与菜单对应关系(SysRoleMenus)表数据库访问层
  *
  * @author makejava
- * @since 2020-07-10 14:34:32
+ * @since 2020-07-10 16:38:17
  */
 @Mapper
 public interface SysRoleMenusDao {

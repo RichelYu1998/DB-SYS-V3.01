@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * 资源管理(SysMenus)表控制层
  *
  * @author makejava
- * @since 2020-07-10 14:34:31
+ * @since 2020-07-10 16:38:16
  */
 @RestController
 @RequestMapping("sysMenus")

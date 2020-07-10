@@ -10,7 +10,7 @@ import java.util.List;
  * 部门管理(SysDepts)表数据库访问层
  *
  * @author makejava
- * @since 2020-07-10 14:34:21
+ * @since 2020-07-10 16:38:05
  */
 @Mapper
 public interface SysDeptsDao {

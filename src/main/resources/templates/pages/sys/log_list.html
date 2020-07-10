@@ -50,6 +50,9 @@
    //JS 问题如何解决? console.log(),debugger,排除法
    $(function(){
 	   //在log_list.html页面的pageId位置，加载page.html,合二为一。
+	   /*
+	   * 加载分页页面
+	   * */
 	   $("#pageId").load("doPageUI",function(){//资源加载完成执行
 		   doGetObjects();//异步加载日志信息
 	   });

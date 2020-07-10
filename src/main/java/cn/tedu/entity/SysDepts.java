@@ -7,10 +7,10 @@ import java.util.Date;
  * 部门管理(SysDepts)实体类
  *
  * @author makejava
- * @since 2020-07-10 14:34:18
+ * @since 2020-07-10 16:38:04
  */
 public class SysDepts implements Serializable {
-    private static final long serialVersionUID = -40748523832077932L;
+    private static final long serialVersionUID = -92234941970643262L;
 
     private Integer id;
     /**

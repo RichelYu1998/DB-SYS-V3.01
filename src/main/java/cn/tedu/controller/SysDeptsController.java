@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * 部门管理(SysDepts)表控制层
  *
  * @author makejava
- * @since 2020-07-10 14:34:24
+ * @since 2020-07-10 16:38:09
  */
 @RestController
 @RequestMapping("sysDepts")

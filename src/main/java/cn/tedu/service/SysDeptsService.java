@@ -8,7 +8,7 @@ import java.util.List;
  * 部门管理(SysDepts)表服务接口
  *
  * @author makejava
- * @since 2020-07-10 14:34:22
+ * @since 2020-07-10 16:38:07
  */
 public interface SysDeptsService {
 

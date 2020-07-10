@@ -6,10 +6,10 @@ import java.io.Serializable;
  * 用户与角色对应关系(SysUserRoles)实体类
  *
  * @author makejava
- * @since 2020-07-10 14:34:36
+ * @since 2020-07-10 16:38:22
  */
 public class SysUserRoles implements Serializable {
-    private static final long serialVersionUID = -83903435837295019L;
+    private static final long serialVersionUID = 977109174788733993L;
 
     private Integer id;
     /**

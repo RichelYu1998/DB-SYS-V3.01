@@ -7,10 +7,10 @@ import java.util.Date;
  * 角色(SysRoles)实体类
  *
  * @author makejava
- * @since 2020-07-10 14:34:34
+ * @since 2020-07-10 16:38:21
  */
 public class SysRoles implements Serializable {
-    private static final long serialVersionUID = -59305799898999779L;
+    private static final long serialVersionUID = -92863185097085523L;
 
     private Long id;
     /**

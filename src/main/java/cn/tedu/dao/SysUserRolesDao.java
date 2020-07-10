@@ -10,7 +10,7 @@ import java.util.List;
  * 用户与角色对应关系(SysUserRoles)表数据库访问层
  *
  * @author makejava
- * @since 2020-07-10 14:34:36
+ * @since 2020-07-10 16:38:23
  */
 @Mapper
 public interface SysUserRolesDao {

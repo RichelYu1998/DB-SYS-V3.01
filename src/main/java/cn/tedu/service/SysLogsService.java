@@ -8,7 +8,7 @@ import java.util.List;
  * 系统日志(SysLogs)表服务接口
  *
  * @author makejava
- * @since 2020-07-10 14:34:28
+ * @since 2020-07-10 16:38:11
  */
 public interface SysLogsService {
 

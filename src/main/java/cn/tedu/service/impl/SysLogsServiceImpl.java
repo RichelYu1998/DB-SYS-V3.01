@@ -4,8 +4,8 @@ import cn.tedu.dao.SysLogsDao;
 import cn.tedu.entity.PageObject;
 import cn.tedu.entity.SysLogs;
 import cn.tedu.service.SysLogsService;
-import com.google.protobuf.ServiceException;
 import org.springframework.stereotype.Service;
+import cn.tedu.common.ServiceException;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -80,7 +80,7 @@ public class SysLogsServiceImpl implements SysLogsService {
     }
 
     @Override
-    public PageObject<SysLogs> findPageObjects(String username, Integer pageCurrent) throws ServiceException {
+    public PageObject<SysLogs> findPageObjects(String username, Integer pageCurrent){
         //1.验证参数合法性
         //1.1 验证 pageCurrent 的合法性，
         //不合法抛出 IllegalArgumentException 异常

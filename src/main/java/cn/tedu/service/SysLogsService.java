@@ -1,8 +1,8 @@
 package cn.tedu.service;
 
+import cn.tedu.common.ServiceException;
 import cn.tedu.entity.PageObject;
 import cn.tedu.entity.SysLogs;
-import com.google.protobuf.ServiceException;
 
 import java.util.List;
 

@@ -26,15 +26,4 @@ public class PageController {
     public String doLogUI() {
         return "sys/log_list";
     }
-    /*
-    * 分页页面
-    */
-    @RequestMapping("doPageUI")
-    public String doPageUI(){
-        return "common/page";
-    }
-    @RequestMapping("{module}/{moduleUI}")
-    public String doModuleUI(@PathVariable String moduleUI) {
-        return "sys/"+moduleUI;
-    }
 }

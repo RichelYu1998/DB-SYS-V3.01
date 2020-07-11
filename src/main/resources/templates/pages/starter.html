@@ -441,7 +441,15 @@ desired effect
     		  $("#mainContentId").load(url); 
     	  }) 
       }
-      
+      $(".input-group-btn").on("click",".btn-search",doQueryObjects)
+      function doQueryObjects() {
+        //为什么要在此位置初始化 pageCurrent 的值为 1?
+        //数据查询时页码的初始位置也应该是第一页
+        $("pageId").data("pageCurrent",1);
+        //为什么要调用 doGetObjects 函数？
+        //重用 js 代码，简化 jS 代码编写。
+        doGetObjects();
+      }
 </script>
 </body>
 </html>

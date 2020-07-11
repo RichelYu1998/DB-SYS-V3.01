@@ -209,16 +209,25 @@
 		   tBody.append(tr);
 	   }
    }
-   function doCreateTds(row){
+   function doCreateTds(data){
 	   var tds=
 	    "<td><input type='checkbox' class='cBox' value='"+row.id+"'></td>"+
-	    "<td>"+row.username+"</td>"+
-	    "<td>"+row.operation+"</td>"+
-	    "<td>"+row.method+"</td>"+
-	    "<td>"+row.params+"</td>"+
-	    "<td>"+row.ip+"</td>"+
-	    "<td>"+row.time+"</td>";
+	    "<td>"+data.username+"</td>"+
+	    "<td>"+data.operation+"</td>"+
+	    "<td>"+data.method+"</td>"+
+	    "<td>"+data.params+"</td>"+
+	    "<td>"+data.ip+"</td>"+
+	    "<td>"+data.time+"</td>";
 	    return tds;
+   }
+   function doSetPagination(page) {
+	   //1.始化数据
+	   $(".rowCount").html("总记录数("+page.rowCount+")");
+	   $(".pageCount").html("总页数("+page.pageCount+")");
+	   $(".pageCurrent").html("当前页("+page.pageCurrent+")");
+	   //2.绑定数据(为后续对此数据的使用提供服务)
+	   $("#pageId").data("pageCurrent",page.pageCurrent);
+	   $("#pageId").data("pageCount",page.pageCount);
    }
 </script>
 

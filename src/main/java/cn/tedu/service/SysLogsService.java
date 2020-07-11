@@ -1,6 +1,5 @@
 package cn.tedu.service;
 
-import cn.tedu.common.exception.ServiceException;
 import cn.tedu.entity.PageObject;
 import cn.tedu.entity.SysLogs;
 
@@ -62,13 +61,9 @@ public interface SysLogsService {
     PageObject<SysLogs> findPageObjects(
             String username,
             Integer pageCurrent
-    ) throws ServiceException;
+    );
     /*
     * 基于多个 id 进行日志删除
     * */
     int deleteObjects(Integer... ids);
-    /*
-    * 保存日志信息
-    * */
-    void saveObject(SysLogs entity);
 }

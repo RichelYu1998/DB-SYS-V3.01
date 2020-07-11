@@ -1,6 +1,6 @@
 package cn.tedu.service;
 
-import cn.tedu.common.ServiceException;
+import cn.tedu.common.exception.ServiceException;
 import cn.tedu.entity.PageObject;
 import cn.tedu.entity.SysLogs;
 

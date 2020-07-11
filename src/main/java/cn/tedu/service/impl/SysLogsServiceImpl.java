@@ -1,11 +1,11 @@
 package cn.tedu.service.impl;
 
+import cn.tedu.common.exception.ServiceException;
 import cn.tedu.dao.SysLogsDao;
 import cn.tedu.entity.PageObject;
 import cn.tedu.entity.SysLogs;
 import cn.tedu.service.SysLogsService;
 import org.springframework.stereotype.Service;
-import cn.tedu.common.ServiceException;
 
 import javax.annotation.Resource;
 import java.util.List;

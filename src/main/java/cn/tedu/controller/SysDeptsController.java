@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * @since 2020-07-10 16:38:09
  */
 @RestController
-@RequestMapping("sysDepts")
+@RequestMapping("/dept/")
 public class SysDeptsController {
     /**
      * 服务对象

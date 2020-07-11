@@ -63,4 +63,8 @@ public interface SysLogsService {
             String username,
             Integer pageCurrent
     ) throws ServiceException;
+    /*
+    * 基于多个 id 进行日志删除
+    * */
+    int deleteObjects(Integer... ids);
 }

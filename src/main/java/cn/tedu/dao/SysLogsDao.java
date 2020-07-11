@@ -81,4 +81,8 @@ public interface SysLogsDao {
             @Param("startIndex")Integer startIndex,
             @Param("pageSize") int pageSize
     );
+    /*
+    * 加基于 id 执行日志删除
+    * */
+    int deleteObjects(@Param("ids")Integer...ids);
 }

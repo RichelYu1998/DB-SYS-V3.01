@@ -124,6 +124,23 @@
         order by createdTime desc
         limit #{startIndex},#{pageSize}
     </select>
-
+    <!-- 删除 -->
+    <delete id="deleteObjects">
+        delete from sys_logs
+        <choose>
+            <when test="ids!=null and ids.length>0">
+                <where>
+                    <foreach collection="ids"
+                             item="id"
+                             separator="or">
+                        id=#{id}
+                    </foreach>
+                </where>
+            </when>
+            <otherwise>
+                where 1=2
+            </otherwise>
+        </choose>
+    </delete>
 
 </mapper>

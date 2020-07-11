@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * @since 2020-07-10 16:38:25
  */
 @RestController
-@RequestMapping("sysUsers")
+@RequestMapping("/user/")
 public class SysUsersController {
     /**
      * 服务对象

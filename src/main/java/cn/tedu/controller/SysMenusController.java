@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * @since 2020-07-10 16:38:16
  */
 @RestController
-@RequestMapping("sysMenus")
+@RequestMapping("/menu/")
 public class SysMenusController {
     /**
      * 服务对象

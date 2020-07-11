@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  * @since 2020-07-10 16:38:11
  */
 @RestController
-@RequestMapping("sysLogs")
+@RequestMapping("/log/")
 public class SysLogsController {
     /**
      * 服务对象
@@ -38,12 +38,19 @@ public class SysLogsController {
     }
 
     /*
-    * 分页请求
-    * */
+     * 分页请求
+     * */
     @RequestMapping("doFindPageObjects")
     @ResponseBody
-    public JsonResult doFindPageObjects(String username,Integer pageCurrent){
+    public JsonResult doFindPageObjects(String username, Integer pageCurrent) {
         PageObject<SysLogs> pageObjects = sysLogsService.findPageObjects(username, pageCurrent);
         return new JsonResult(pageObjects);
+    }
+
+    @RequestMapping("doDeleteObjects")
+    @ResponseBody
+    public JsonResult doDeleteObjects(Integer... ids){
+        sysLogsService.deleteObjects(ids);
+        return new JsonResult("delete ok");
     }
 }

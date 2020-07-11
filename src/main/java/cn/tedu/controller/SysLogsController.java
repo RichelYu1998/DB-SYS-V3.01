@@ -1,9 +1,12 @@
 package cn.tedu.controller;
 
+import cn.tedu.common.vo.JsonResult;
+import cn.tedu.entity.PageObject;
 import cn.tedu.entity.SysLogs;
 import cn.tedu.service.SysLogsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -34,4 +37,13 @@ public class SysLogsController {
         return this.sysLogsService.queryById(id);
     }
 
+    /*
+    * 分页请求
+    * */
+    @RequestMapping("doFindPageObjects")
+    @ResponseBody
+    public JsonResult doFindPageObjects(String username,Integer pageCurrent){
+        PageObject<SysLogs> pageObjects = sysLogsService.findPageObjects(username, pageCurrent);
+        return new JsonResult(pageObjects);
+    }
 }

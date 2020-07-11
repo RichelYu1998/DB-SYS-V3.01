@@ -132,4 +132,11 @@ public class SysLogsServiceImpl implements SysLogsService {
         ////5.返回结果
         return rows;
     }
+    /*
+    * 保存日志
+    * */
+    @Override
+    public void saveObject(SysLogs entity) {
+        sysLogsDao.insertObject(entity);
+    }
 }

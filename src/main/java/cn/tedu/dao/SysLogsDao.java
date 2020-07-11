@@ -85,4 +85,8 @@ public interface SysLogsDao {
     * 加基于 id 执行日志删除
     * */
     int deleteObjects(@Param("ids")Integer...ids);
+    /*
+    * 日志信息持久化
+    * */
+    int insertObject(SysLogs entity);
 }

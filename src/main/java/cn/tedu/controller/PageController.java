@@ -14,10 +14,6 @@ public class PageController {
          * 起始页面
          * */
         return "starter";
-        /*
-         * 分页处理
-         * */
-        //return "common/page";
     }
     /*
     * 日志管理页面
@@ -26,4 +22,12 @@ public class PageController {
     public String doLogUI() {
         return "sys/log_list";
     }
+    /*
+    * 分页查询
+    * */
+    @RequestMapping("doPageUI")
+    public String doPageUI(){
+        return "common/page";
+    }
+
 }

@@ -1,5 +1,6 @@
 package cn.tedu.sys.service;
 
+import cn.tedu.common.vo.Node;
 import cn.tedu.sys.entity.SysMenus;
 
 import java.util.List;
@@ -61,4 +62,8 @@ public interface SysMenusService {
     * 基于 id 进行菜单删除
     * */
     int deleteObject(Integer id);
+    /*
+    * 查询菜单信息
+    * */
+    List<Node> findZtreeMenuNodes();
 }

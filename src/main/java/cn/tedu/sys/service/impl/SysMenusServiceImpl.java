@@ -1,6 +1,7 @@
 package cn.tedu.sys.service.impl;
 
 import cn.tedu.common.exception.ServiceException;
+import cn.tedu.common.vo.Node;
 import cn.tedu.sys.dao.SysMenusDao;
 import cn.tedu.sys.dao.SysRoleMenusDao;
 import cn.tedu.sys.entity.SysMenus;
@@ -111,5 +112,12 @@ public class SysMenusServiceImpl implements SysMenusService {
             throw new ServiceException("此菜单可能已经不存在");
         //5.返回结果
         return rows;
+    }
+    /*
+     * 查询菜单信息
+     * */
+    @Override
+    public List<Node> findZtreeMenuNodes() {
+        return sysMenusDao.findZtreeMenuNodes();
     }
 }

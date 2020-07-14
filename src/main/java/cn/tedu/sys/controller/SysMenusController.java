@@ -49,4 +49,11 @@ public class SysMenusController {
         sysMenusService.deleteObject(id);
         return new JsonResult("delete ok");
     }
+    /*
+     * 查询菜单信息
+     * */
+    @RequestMapping("doFindZtreeMenuNodes")
+    public JsonResult doFindZtreeMenuNodes(){
+        return new JsonResult(sysMenusService.findZtreeMenuNodes());
+    }
 }

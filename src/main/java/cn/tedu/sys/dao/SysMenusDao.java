@@ -1,5 +1,6 @@
 package cn.tedu.sys.dao;
 
+import cn.tedu.common.vo.Node;
 import cn.tedu.sys.entity.SysMenus;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -78,4 +79,8 @@ public interface SysMenusDao {
     * 基于菜单 id 删除菜单记录
     * */
     int deleteObject(Integer id);
+    /*
+    * 查询上级菜单
+    * */
+    List<Node> findZtreeMenuNodes();
 }

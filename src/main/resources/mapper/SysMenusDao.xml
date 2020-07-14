@@ -151,4 +151,9 @@
          delete from sys_menus
          where id =#{id}
     </delete>
+    <!-- 查询上级菜单信息 -->
+    <select id="findZtreeMenuNodes" resultType="cn.tedu.common.vo.Node">
+        select id,name,parentId
+        from sys_menus
+    </select>
 </mapper>

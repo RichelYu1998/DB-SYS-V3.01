@@ -1,8 +1,9 @@
 package cn.tedu.common.vo;
 
-public class JsonResult {
-    private static final long serialVersionUID = -
-            856924038217431339L;
+import java.io.Serializable;
+
+public class JsonResult implements Serializable {
+    private static final long serialVersionUID = -2909412708331760002L;
     /**状态码*/
     private int state=1;//1 表示 SUCCESS,0 表示 ERROR
     /**状态信息*/

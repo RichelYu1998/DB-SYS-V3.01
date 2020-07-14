@@ -64,5 +64,8 @@ public interface SysRoleMenusDao {
      * @return 影响行数
      */
     int deleteById(Integer id);
-
+    /*
+     *基于菜单 id 删除关系数据
+     * */
+    int deleteObjectsByMenuId(Integer menuId);
 }

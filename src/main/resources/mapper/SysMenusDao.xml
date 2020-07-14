@@ -138,4 +138,17 @@
     ) parentName
         from sys_menus c
     </select>
+    <!-- 加基于 id 统计子菜单数量的元素 -->
+    <select id="getChildCount"
+            parameterType="int"
+            resultType="int">
+         select count(*)
+         from sys_menus
+         where parentId=#{id}
+    </select>
+    <!-- 基于带单 id 删除菜单自身记录信息 -->
+    <delete id="deleteObject">
+         delete from sys_menus
+         where id =#{id}
+    </delete>
 </mapper>

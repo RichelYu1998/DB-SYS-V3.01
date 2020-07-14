@@ -57,4 +57,8 @@ public interface SysMenusService {
      * 菜单记录查询
      * */
     List<Map<String, Object>> findObjects();
+    /*
+    * 基于 id 进行菜单删除
+    * */
+    int deleteObject(Integer id);
 }

@@ -70,4 +70,12 @@ public interface SysMenusDao {
      * 查询
      * */
     List<Map<String, Object>> findObjects();
+    /*
+    * 删除
+    * */
+    int getChildCount(Integer id);
+    /*
+    * 基于菜单 id 删除菜单记录
+    * */
+    int deleteObject(Integer id);
 }

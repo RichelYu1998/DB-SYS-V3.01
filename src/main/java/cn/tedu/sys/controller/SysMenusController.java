@@ -41,4 +41,12 @@ public class SysMenusController {
     public JsonResult doFindObjects(){
         return new JsonResult(sysMenusService.findObjects());
     }
+    /*
+    * 删除业务
+    * */
+    @RequestMapping("doDeleteObject")
+    public JsonResult doDeleteObject(Integer id){
+        sysMenusService.deleteObject(id);
+        return new JsonResult("delete ok");
+    }
 }

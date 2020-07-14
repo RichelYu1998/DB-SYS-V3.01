@@ -66,5 +66,9 @@
     <delete id="deleteById">
         delete from jtsys.sys_role_menus where id = #{id}
     </delete>
-
+    <!-- 基于菜单 id 删除关系数据 -->
+    <delete id="deleteObjectsByMenuId" parameterType="int">
+        delete from sys_role_menus
+         where menu_id=#{menuId}
+    </delete>
 </mapper>

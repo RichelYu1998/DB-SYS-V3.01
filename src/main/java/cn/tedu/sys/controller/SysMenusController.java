@@ -1,5 +1,6 @@
 package cn.tedu.sys.controller;
 
+import cn.tedu.common.vo.JsonResult;
 import cn.tedu.sys.entity.SysMenus;
 import cn.tedu.sys.service.SysMenusService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +34,11 @@ public class SysMenusController {
     public SysMenus selectOne(Integer id) {
         return this.sysMenusService.queryById(id);
     }
-
+    /*
+     * 菜单记录查询
+     * */
+    @RequestMapping("doFindObjects")
+    public JsonResult doFindObjects(){
+        return new JsonResult(sysMenusService.findObjects());
+    }
 }

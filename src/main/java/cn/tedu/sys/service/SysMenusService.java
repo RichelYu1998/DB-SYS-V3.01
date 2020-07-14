@@ -3,6 +3,7 @@ package cn.tedu.sys.service;
 import cn.tedu.sys.entity.SysMenus;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 资源管理(SysMenus)表服务接口
@@ -52,5 +53,8 @@ public interface SysMenusService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
-
+    /*
+     * 菜单记录查询
+     * */
+    List<Map<String, Object>> findObjects();
 }

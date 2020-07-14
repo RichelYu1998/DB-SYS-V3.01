@@ -1,5 +1,6 @@
 package cn.tedu.sys.service.impl;
 
+import cn.tedu.common.exception.ServiceException;
 import cn.tedu.sys.dao.SysMenusDao;
 import cn.tedu.sys.entity.SysMenus;
 import cn.tedu.sys.service.SysMenusService;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 资源管理(SysMenus)表服务实现类
@@ -75,5 +77,15 @@ public class SysMenusServiceImpl implements SysMenusService {
     @Override
     public boolean deleteById(Integer id) {
         return this.sysMenusDao.deleteById(id) > 0;
+    }
+    /*
+     * 菜单记录查询
+     * */
+    @Override
+    public List<Map<String, Object>> findObjects() {
+        List<Map<String, Object>> list = sysMenusDao.findObjects();
+        if(list==null||list.size()==0)
+            throw new ServiceException("没有对应的菜单信息");
+        return list;
     }
 }

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 资源管理(SysMenus)表数据库访问层
@@ -65,4 +66,8 @@ public interface SysMenusDao {
      */
     int deleteById(Integer id);
 
+    /*
+     * 查询
+     * */
+    List<Map<String, Object>> findObjects();
 }

@@ -165,4 +165,18 @@
              (#{name},#{url},#{type},#{sort},#{note},#{parentId},
             #{permission},now(),now(),#{createdUser},#{modifiedUser})
     </insert>
+    <!-- 于更新菜单信息 -->
+    <update id="updateObject" parameterType="cn.tedu.sys.entity.SysMenus">
+        update sys_menus
+             set
+             name=#{name},
+             type=#{type},
+             sort=#{sort},
+             url=#{url},
+             parentId=#{parentId},
+             permission=#{permission},
+             modifiedUser=#{modifiedUser},
+             modifiedTime=now()
+             where id=#{id}
+    </update>
 </mapper>

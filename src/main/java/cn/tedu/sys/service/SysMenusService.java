@@ -70,4 +70,9 @@ public interface SysMenusService {
     * 保存菜单对象
     * */
     int saveObject(SysMenus entity);
+    /*
+    * 更新菜单
+    * */
+    int updateObject(SysMenus entity);
+    
 }

@@ -66,4 +66,13 @@ public class SysMenusController {
         sysMenusService.saveObject(entity);
         return new JsonResult("save ok");
     }
+    /*
+    * 保存菜单数据请求
+    * */
+    @RequestMapping("doUpdateObject")
+    @ResponseBody
+    public JsonResult doUpdateObject(SysMenus entity){
+        sysMenusService.updateObject(entity);
+        return new JsonResult("update ok");
+    }
 }

@@ -87,4 +87,8 @@ public interface SysMenusDao {
     * 数据持久化
     * */
     int insertObject(SysMenus entity);
+    /*
+    * 数据更新
+    * */
+    int updateObject(SysMenus entity);
 }

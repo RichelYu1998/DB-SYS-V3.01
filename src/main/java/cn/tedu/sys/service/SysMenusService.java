@@ -66,4 +66,8 @@ public interface SysMenusService {
     * 查询菜单信息
     * */
     List<Node> findZtreeMenuNodes();
+    /*
+    * 保存菜单对象
+    * */
+    int saveObject(SysMenus entity);
 }

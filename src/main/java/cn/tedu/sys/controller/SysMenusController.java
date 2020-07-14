@@ -5,6 +5,7 @@ import cn.tedu.sys.entity.SysMenus;
 import cn.tedu.sys.service.SysMenusService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -55,5 +56,14 @@ public class SysMenusController {
     @RequestMapping("doFindZtreeMenuNodes")
     public JsonResult doFindZtreeMenuNodes(){
         return new JsonResult(sysMenusService.findZtreeMenuNodes());
+    }
+    /*
+    * 保存菜单数据请求
+    * */
+    @RequestMapping("doSaveObject")
+    @ResponseBody
+    public JsonResult doSaveObject(SysMenus entity){
+        sysMenusService.saveObject(entity);
+        return new JsonResult("save ok");
     }
 }

@@ -83,4 +83,8 @@ public interface SysMenusDao {
     * 查询上级菜单
     * */
     List<Node> findZtreeMenuNodes();
+    /*
+    * 数据持久化
+    * */
+    int insertObject(SysMenus entity);
 }

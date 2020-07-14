@@ -8,6 +8,7 @@ import cn.tedu.sys.entity.SysMenus;
 import cn.tedu.sys.service.SysMenusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -84,40 +85,65 @@ public class SysMenusServiceImpl implements SysMenusService {
     public boolean deleteById(Integer id) {
         return this.sysMenusDao.deleteById(id) > 0;
     }
+
     /*
      * 菜单记录查询
      * */
     @Override
     public List<Map<String, Object>> findObjects() {
         List<Map<String, Object>> list = sysMenusDao.findObjects();
-        if(list==null||list.size()==0)
+        if (list == null || list.size() == 0)
             throw new ServiceException("没有对应的菜单信息");
         return list;
     }
+
     /*
      * 基于 id 进行菜单删除
      * */
     @Override
     public int deleteObject(Integer id) {
         //1.验证数据的合法性
-        if(id==null||id<0)
+        if (id == null || id < 0)
             throw new IllegalArgumentException("请先选择");
         //2.基于 id 进行子元素查询
         int count = sysMenusDao.getChildCount(id);
-        if(count>0)
-            throw  new ServiceException("请先删除子菜单");
+        if (count > 0)
+            throw new ServiceException("请先删除子菜单");
         //3.删除角色,菜单关系数据
         int rows = sysRoleMenuDao.deleteObjectsByMenuId(id);
-        if(rows==0)
+        if (rows == 0)
             throw new ServiceException("此菜单可能已经不存在");
         //5.返回结果
         return rows;
     }
+
     /*
      * 查询菜单信息
      * */
     @Override
     public List<Node> findZtreeMenuNodes() {
         return sysMenusDao.findZtreeMenuNodes();
+    }
+
+    /*
+     * 保存菜单对象
+     * */
+    @Override
+    public int saveObject(SysMenus entity) {
+        //1.合法验证
+        if(entity==null)
+            throw new ServiceException("保存对象不能为空");
+        if(StringUtils.isEmpty(entity.getName()))
+            throw new ServiceException("菜单名不能为空");
+        int rows;
+        //2.保存数据
+        try {
+            rows = sysMenusDao.insertObject(entity);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new ServiceException("保存失败");
+        }
+        //3.返回数据
+        return rows;
     }
 }

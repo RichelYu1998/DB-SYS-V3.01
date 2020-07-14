@@ -156,4 +156,13 @@
         select id,name,parentId
         from sys_menus
     </select>
+    <!-- 写入菜单信息 -->
+    <insert id="insertObject" parameterType="cn.tedu.sys.entity.SysMenus">
+        insert into sys_menus
+             (name,url,type,sort,note,parentId,permission,
+            createdTime,modifiedTime,createdUser,modifiedUser)
+             values
+             (#{name},#{url},#{type},#{sort},#{note},#{parentId},
+            #{permission},now(),now(),#{createdUser},#{modifiedUser})
+    </insert>
 </mapper>

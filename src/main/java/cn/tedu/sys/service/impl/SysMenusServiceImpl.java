@@ -103,7 +103,7 @@ public class SysMenusServiceImpl implements SysMenusService {
     @Override
     public int deleteObject(Integer id) {
         //1.验证数据的合法性
-        if (id == null || id < 0)
+        if (id == null || id < 1)
             throw new IllegalArgumentException("请先选择");
         //2.基于 id 进行子元素查询
         int count = sysMenusDao.getChildCount(id);

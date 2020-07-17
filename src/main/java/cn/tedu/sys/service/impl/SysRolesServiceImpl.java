@@ -156,4 +156,27 @@ public class SysRolesServiceImpl implements SysRolesService {
             throw new ServiceException("此记录已经不存在");
         return result;
     }
+    /*
+     * 更新角色对象
+     * */
+    @Override
+    public int updateObject(SysRoles entity, Integer[] menuIds) {
+        //1.合法性验证
+        if(entity==null)
+            throw new IllegalArgumentException("更新的对象不能为空");
+        if(entity.getId()==null)
+            throw new IllegalArgumentException("id的值不能为空");
+        if(StringUtils.isEmpty(entity.getName()))
+            throw new IllegalArgumentException("角色名不能为空");
+        if(menuIds==null||menuIds.length==0)
+            throw new IllegalArgumentException("必须为角色指定一个权限");
+        //2.更新数据
+        int rows = sysRolesDao.updateObject(entity);
+        if(rows==0)
+            throw new ServiceException("对象可能已经不存在");
+        sysRoleMenuDao.deleteObjectsByRoleId(Math.toIntExact(entity.getId()));
+        sysRoleMenuDao.insertObjects(entity.getId(),menuIds);
+        //3.返回结果
+        return rows;
+    }
 }

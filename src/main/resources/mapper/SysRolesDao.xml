@@ -145,4 +145,14 @@
         </collection>
 
     </resultMap>
+    <update id="updateObject" parameterType="cn.tedu.sys.entity.SysRoles">
+        update sys_roles
+         set
+             name=#{name},
+             note=#{note},
+             modifiedUser=#{modifiedUser},
+             modifiedTime=now()
+         where id=#{id}
+     </update>
+
 </mapper>

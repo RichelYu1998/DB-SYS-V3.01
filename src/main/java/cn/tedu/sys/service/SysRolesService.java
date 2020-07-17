@@ -71,4 +71,8 @@ public interface SysRolesService {
     * 基于 id 查询对应角色
     * */
     SysRoleMenuVo findObjectById(Integer id);
+    /*
+    * 更新角色对象
+    * */
+    int updateObject(SysRoles entity,Integer[] menuIds);
 }

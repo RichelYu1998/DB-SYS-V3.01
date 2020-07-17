@@ -69,4 +69,12 @@ public class SysRolesController {
     public JsonResult doFindObjectById(Integer id){
         return new JsonResult(sysRolesService.findObjectById(id));
     }
+    /*
+    * 更新角色
+    * */
+    @RequestMapping("doUpdateObject")
+    public JsonResult doUpdateObject(SysRoles entity, Integer[] menuIds){
+        sysRolesService.updateObject(entity,menuIds);
+        return new JsonResult("update ok");
+    }
 }

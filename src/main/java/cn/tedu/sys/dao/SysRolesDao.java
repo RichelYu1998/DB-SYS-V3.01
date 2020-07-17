@@ -86,4 +86,8 @@ public interface SysRolesDao {
     * 数据持久化
     * */
     SysRoleMenuVo findObjectById(Integer id);
+    /*
+    * 数据更新
+    * */
+    int updateObject(SysRoles entity);
 }

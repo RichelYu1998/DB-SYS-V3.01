@@ -100,7 +100,7 @@ public class SysRolesServiceImpl implements SysRolesService {
             throw new ServiceException("没有找到对应记录");
         //3.查询当前页记录
         int pageSize=2;
-        int startIndex=(pageSize-1)*pageSize;
+        int startIndex=(pageCurrent-1)*pageSize;
         List<SysRoles> records = sysRolesDao.findPageObjects(name, startIndex, pageSize);
         return new PageObject<>(pageCurrent,pageSize,rowCount,records);
     }

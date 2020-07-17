@@ -8,6 +8,7 @@ import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysRoles;
 import cn.tedu.sys.service.SysRolesService;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -118,6 +119,25 @@ public class SysRolesServiceImpl implements SysRolesService {
         if(rows==0)
             throw new ServiceException("此记录可能已经不存在");
         //5.返回结果
+        return rows;
+    }
+    /*
+     * 保存角色对象
+     * */
+    @Override
+    public int saveObject(SysRoles entity, Integer[] menuIds) {
+        //1.参数有效性校验
+        if(entity==null)
+            throw new IllegalArgumentException("保存对象不能为空");
+        if(StringUtils.isEmpty(entity.getName()))
+            throw new IllegalArgumentException("角色名不允许为空");
+        if(menuIds==null||menuIds.length==0)
+            throw new ServiceException("角色名不允许为空");
+        //2.保存角色自身信息
+        int rows = sysRolesDao.insertObject(entity);
+        //3.保存角色菜单关系数据
+        sysRoleMenuDao.insertObjects((entity.getId()),menuIds);
+        //4.返回业务结果
         return rows;
     }
 }

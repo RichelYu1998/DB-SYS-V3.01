@@ -62,4 +62,8 @@ public interface SysRolesService {
      * 基于 id 进行角色删除
      * */
     int deleteObject(Integer id);
+    /*
+    * 保存角色对象
+    * */
+    int saveObject(SysRoles entity,Integer[]menuIds);
 }

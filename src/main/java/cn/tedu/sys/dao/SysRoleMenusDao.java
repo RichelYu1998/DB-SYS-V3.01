@@ -1,6 +1,7 @@
 package cn.tedu.sys.dao;
 
 import cn.tedu.sys.entity.SysRoleMenus;
+import cn.tedu.sys.entity.SysRoles;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -72,4 +73,10 @@ public interface SysRoleMenusDao {
     * 基于角色 id 删除关系数据
     * */
     int deleteObjectsByRoleId(Integer id);
+    /*
+    * 数据持久化
+    * */
+    int insertObjects(
+            @Param("roleId") Long roleId,
+            @Param("menuIds")Integer[] menuIds);
 }

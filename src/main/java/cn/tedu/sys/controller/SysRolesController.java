@@ -5,6 +5,7 @@ import cn.tedu.sys.entity.SysRoles;
 import cn.tedu.sys.service.SysRolesService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -51,5 +52,14 @@ public class SysRolesController {
     public JsonResult doDeleteObject(Integer id){
         sysRolesService.deleteObject(id);
         return new JsonResult("delete ok");
+    }
+    /*
+    * 保存角色数据请求
+    * */
+    @RequestMapping("doSaveObject")
+    @ResponseBody
+    public JsonResult doSaveObject(SysRoles entity,Integer[] menuIds){
+        sysRolesService.saveObject(entity,menuIds);
+        return new JsonResult("save ok");
     }
 }

@@ -77,4 +77,8 @@ public interface SysRolesDao {
     * 基于菜单 id 删除角色记录
     * */
     int deleteObject(Integer id);
+    /*
+    * 数据持久化
+    * */
+    int insertObject(SysRoles entity);
 }

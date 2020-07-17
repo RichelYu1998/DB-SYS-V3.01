@@ -64,5 +64,13 @@ public interface SysRolesDao {
      * @return 影响行数
      */
     int deleteById(Long id);
-
+    /*
+     *按条件统计记录总数
+     * */
+    int getRowCount(@Param("name") String name);
+    List<SysRoles> findPageObjects(
+            @Param("name")String name,
+            @Param("startIndex")Integer startIndex,
+            @Param("pageSize")Integer pageSize
+    );
 }

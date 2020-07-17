@@ -1,5 +1,6 @@
 package cn.tedu.sys.controller;
 
+import cn.tedu.common.vo.JsonResult;
 import cn.tedu.sys.entity.SysRoles;
 import cn.tedu.sys.service.SysRolesService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +34,14 @@ public class SysRolesController {
     public SysRoles selectOne(Long id) {
         return this.sysRolesService.queryById(id);
     }
+    /*
+     * 菜单查询处理
+     * */
+    @RequestMapping("doFindPageObjects")
+    public JsonResult doFindPageObjects(String name,Integer pageCurrent){
+        return new JsonResult(
+                sysRolesService.findPageObjects(name,
+                        pageCurrent));
 
+    }
 }

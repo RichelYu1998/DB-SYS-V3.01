@@ -94,5 +94,25 @@
     <delete id="deleteById">
         delete from jtsys.sys_roles where id = #{id}
     </delete>
-
+    <sql id="queryWhereId">
+        <where>
+            <if test="name!=null and name!=''">
+                name like concat("%",#{name},"%")
+            </if>
+        </where>
+    </sql>
+    <!-- 按条件统计记录总数 -->
+    <select id="getRowCount" resultType="int">
+        select count(*)
+        from sys_roles
+        <include refid="queryWhereId"></include>
+    </select>
+    <!-- 分页查询 -->
+    <select id="findPageObjects" resultType="cn.tedu.sys.entity.SysRoles">
+        select *
+        from sys_roles
+        <include refid="queryWhereId"/>
+        order by createdTime desc
+        limit #{startIndex},#{pageSize}
+    </select>
 </mapper>

@@ -1,6 +1,8 @@
 package cn.tedu.sys.service.impl;
 
+import cn.tedu.common.exception.ServiceException;
 import cn.tedu.sys.dao.SysRolesDao;
+import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysRoles;
 import cn.tedu.sys.service.SysRolesService;
 import org.springframework.stereotype.Service;
@@ -75,5 +77,23 @@ public class SysRolesServiceImpl implements SysRolesService {
     @Override
     public boolean deleteById(Long id) {
         return this.sysRolesDao.deleteById(id) > 0;
+    }
+    /*
+     * 角色业务数据分页查询
+     * */
+    @Override
+    public PageObject<SysRoles> findPageObjects(String name, Integer pageCurrent) {
+        //1.对参数进行校验
+        if(pageCurrent==null||pageCurrent<1)
+            throw new IllegalArgumentException("当前页码值无效");
+        //2.查询总记录数并进行校验
+        int rowCount = sysRolesDao.getRowCount(name);
+        if(rowCount==0)
+            throw new ServiceException("没有找到对应记录");
+        //3.查询当前页记录
+        int pageSize=2;
+        int startIndex=(pageSize-1)*pageSize;
+        List<SysRoles> records = sysRolesDao.findPageObjects(name, startIndex, pageSize);
+        return new PageObject<>(pageCurrent,pageSize,rowCount,records);
     }
 }

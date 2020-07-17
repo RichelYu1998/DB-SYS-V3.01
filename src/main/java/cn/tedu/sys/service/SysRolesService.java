@@ -1,5 +1,6 @@
 package cn.tedu.sys.service;
 
+import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysRoles;
 
 import java.util.List;
@@ -52,5 +53,9 @@ public interface SysRolesService {
      * @return 是否成功
      */
     boolean deleteById(Long id);
+    /*
+     * 角色业务数据分页查询
+     * */
+    PageObject<SysRoles> findPageObjects(String name,Integer pageCurrent);
 
 }

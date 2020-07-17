@@ -86,4 +86,9 @@
             (#{roleId},#{item})
         </foreach>
     </insert>
+    <select id="findMenuIdsByRoleId" resultType="int">
+        select menu_id
+         from sys_role_menus
+         where role_id=#{id}
+    </select>
 </mapper>

@@ -1,6 +1,7 @@
 package cn.tedu.sys.service.impl;
 
 import cn.tedu.common.exception.ServiceException;
+import cn.tedu.common.vo.SysRoleMenuVo;
 import cn.tedu.sys.dao.SysRoleMenusDao;
 import cn.tedu.sys.dao.SysRolesDao;
 import cn.tedu.sys.dao.SysUserRolesDao;
@@ -139,5 +140,20 @@ public class SysRolesServiceImpl implements SysRolesService {
         sysRoleMenuDao.insertObjects((entity.getId()),menuIds);
         //4.返回业务结果
         return rows;
+    }
+    /*
+     * 基于 id 查询对应角色
+     * */
+    @Override
+    public SysRoleMenuVo findObjectById(Integer id) {
+        //1.合法性验证
+        if(id==null||id<1)
+            throw new IllegalArgumentException("id的值不合法");
+        //2.执行查询
+        SysRoleMenuVo result = sysRolesDao.findObjectById(id);
+        //3.验证结果并返回
+        if(result==null)
+            throw new ServiceException("此记录已经不存在");
+        return result;
     }
 }

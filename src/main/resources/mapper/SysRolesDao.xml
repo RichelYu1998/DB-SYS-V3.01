@@ -131,4 +131,18 @@
              (null,#{name},#{note},now(),now(),
              #{createdUser},#{modifiedUser})
     </insert>
+    <select id="findObjectById" resultMap="sysRoleMenuVo">
+        select id,name,note
+         from sys_roles
+         where id=#{id}
+    </select>
+    <!-- resultMap 一般用于自定义映射或一些关联查询中 -->
+    <resultMap id="sysRoleMenuVo" type="cn.tedu.common.vo.SysRoleMenuVo">
+        <!-- 假如基于 id 做再次执行查询，又希望将 id 值存储到值对象，可以对 id 进行专门映射 -->
+        <id property="id" column="id"/>
+        <!-- collection 一般应用于 one2many 查询 -->
+        <collection property="menuIds" select="cn.tedu.sys.dao.SysRoleMenusDao.findMenuIdsByRoleId" column="id">
+        </collection>
+
+    </resultMap>
 </mapper>

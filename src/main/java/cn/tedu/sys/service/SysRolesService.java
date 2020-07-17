@@ -1,5 +1,6 @@
 package cn.tedu.sys.service;
 
+import cn.tedu.common.vo.SysRoleMenuVo;
 import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysRoles;
 
@@ -66,4 +67,8 @@ public interface SysRolesService {
     * 保存角色对象
     * */
     int saveObject(SysRoles entity,Integer[]menuIds);
+    /*
+    * 基于 id 查询对应角色
+    * */
+    SysRoleMenuVo findObjectById(Integer id);
 }

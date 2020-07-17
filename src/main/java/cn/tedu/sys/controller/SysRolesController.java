@@ -62,4 +62,11 @@ public class SysRolesController {
         sysRolesService.saveObject(entity,menuIds);
         return new JsonResult("save ok");
     }
+    /*
+    * 基于角色 ID 查询角色
+    * */
+    @RequestMapping("doFindObjectById")
+    public JsonResult doFindObjectById(Integer id){
+        return new JsonResult(sysRolesService.findObjectById(id));
+    }
 }

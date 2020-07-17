@@ -1,5 +1,6 @@
 package cn.tedu.sys.dao;
 
+import cn.tedu.common.vo.SysRoleMenuVo;
 import cn.tedu.sys.entity.SysRoles;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -81,4 +82,8 @@ public interface SysRolesDao {
     * 数据持久化
     * */
     int insertObject(SysRoles entity);
+    /*
+    * 数据持久化
+    * */
+    SysRoleMenuVo findObjectById(Integer id);
 }

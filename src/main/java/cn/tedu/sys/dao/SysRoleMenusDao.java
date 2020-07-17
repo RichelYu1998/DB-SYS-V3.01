@@ -68,4 +68,8 @@ public interface SysRoleMenusDao {
      *基于菜单 id 删除关系数据
      * */
     int deleteObjectsByMenuId(Integer menuId);
+    /*
+    * 基于角色 id 删除关系数据
+    * */
+    int deleteObjectsByRoleId(Integer id);
 }

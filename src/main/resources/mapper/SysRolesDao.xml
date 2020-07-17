@@ -115,4 +115,9 @@
         order by createdTime desc
         limit #{startIndex},#{pageSize}
     </select>
+    <!-- 基于角色 id 删除角色 -->
+    <delete id="deleteObject">
+        delete from sys_roles
+        where id =#{id}
+    </delete>
 </mapper>

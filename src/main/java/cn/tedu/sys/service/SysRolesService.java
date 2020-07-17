@@ -53,9 +53,13 @@ public interface SysRolesService {
      * @return 是否成功
      */
     boolean deleteById(Long id);
+
     /*
      * 角色业务数据分页查询
      * */
-    PageObject<SysRoles> findPageObjects(String name,Integer pageCurrent);
-
+    PageObject<SysRoles> findPageObjects(String name, Integer pageCurrent);
+    /*
+     * 基于 id 进行角色删除
+     * */
+    int deleteObject(Integer id);
 }

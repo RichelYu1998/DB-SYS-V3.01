@@ -1,7 +1,9 @@
 package cn.tedu.sys.service.impl;
 
 import cn.tedu.common.exception.ServiceException;
+import cn.tedu.sys.dao.SysRoleMenusDao;
 import cn.tedu.sys.dao.SysRolesDao;
+import cn.tedu.sys.dao.SysUserRolesDao;
 import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysRoles;
 import cn.tedu.sys.service.SysRolesService;
@@ -20,6 +22,10 @@ import java.util.List;
 public class SysRolesServiceImpl implements SysRolesService {
     @Resource
     private SysRolesDao sysRolesDao;
+    @Resource
+    private SysRoleMenusDao sysRoleMenuDao;
+    @Resource
+    private SysUserRolesDao sysUserRoleDao;
 
     /**
      * 通过ID查询单条数据
@@ -95,5 +101,23 @@ public class SysRolesServiceImpl implements SysRolesService {
         int startIndex=(pageSize-1)*pageSize;
         List<SysRoles> records = sysRolesDao.findPageObjects(name, startIndex, pageSize);
         return new PageObject<>(pageCurrent,pageSize,rowCount,records);
+    }
+    /*
+     * 基于 id 进行角色删除
+     * */
+    @Override
+    public int deleteObject(Integer id) {
+        //1.验证数据的合法性
+        if(id==null||id<1)
+            throw  new IllegalArgumentException("请先选择");
+        //3.基于 id 删除关系数据
+        sysRoleMenuDao.deleteObjectsByRoleId(id);
+        sysUserRoleDao.deleteObjectsByRoleId(id);
+        //4.删除角色自身
+        int rows = sysRolesDao.deleteObject(id);
+        if(rows==0)
+            throw new ServiceException("此记录可能已经不存在");
+        //5.返回结果
+        return rows;
     }
 }

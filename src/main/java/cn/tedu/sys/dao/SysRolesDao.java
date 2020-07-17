@@ -73,4 +73,8 @@ public interface SysRolesDao {
             @Param("startIndex")Integer startIndex,
             @Param("pageSize")Integer pageSize
     );
+    /*
+    * 基于菜单 id 删除角色记录
+    * */
+    int deleteObject(Integer id);
 }

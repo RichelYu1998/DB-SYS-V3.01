@@ -64,5 +64,8 @@ public interface SysUserRolesDao {
      * @return 影响行数
      */
     int deleteById(Integer id);
-
+    /*
+     *基于角色 id 删除关系数据
+     * */
+    int deleteObjectsByRoleId(Integer roleId);
 }

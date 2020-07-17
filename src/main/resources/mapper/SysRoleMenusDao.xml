@@ -71,4 +71,9 @@
         delete from sys_role_menus
          where menu_id=#{menuId}
     </delete>
+    <!-- 基于菜单 id 删除 -->
+    <delete id="deleteObjectsByRoleId" parameterType="int">
+        delete from sys_role_menus
+        where role_id=#{roleId}
+    </delete>
 </mapper>

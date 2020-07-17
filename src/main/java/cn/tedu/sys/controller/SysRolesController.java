@@ -44,4 +44,12 @@ public class SysRolesController {
                         pageCurrent));
 
     }
+    /*
+    * 删除业务
+    * */
+    @RequestMapping("doDeleteObject")
+    public JsonResult doDeleteObject(Integer id){
+        sysRolesService.deleteObject(id);
+        return new JsonResult("delete ok");
+    }
 }

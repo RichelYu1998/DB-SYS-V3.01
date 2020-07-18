@@ -1,6 +1,8 @@
 package cn.tedu.sys.service.impl;
 
+import cn.tedu.common.vo.SysUserDeptVo;
 import cn.tedu.sys.dao.SysUsersDao;
+import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysUsers;
 import cn.tedu.sys.service.SysUsersService;
 import org.springframework.stereotype.Service;
@@ -76,4 +78,24 @@ public class SysUsersServiceImpl implements SysUsersService {
     public boolean deleteById(Integer id) {
         return this.sysUsersDao.deleteById(id) > 0;
     }
+    /*
+     *分页查询操作
+     * */
+    @Override
+    public PageObject<SysUserDeptVo> findPageObjects(String username, Integer pageCurrent) {
+        //1.对参数进行校验
+        if(pageCurrent==null||pageCurrent<1)
+            throw new IllegalArgumentException("当前页码值无效");
+        //2.查询总记录数并进行校验
+        int rowCount = sysUsersDao.getRowCount(username);
+        if(rowCount==0)
+            throw new IllegalArgumentException("没有找到对应记录");
+        //3.查询当前页记录
+        int pageSize=2;
+        int startIndex=(pageCurrent-1)*pageSize;
+        List<SysUserDeptVo> records = sysUsersDao.findPageObjects(username, startIndex, pageSize);
+        //4.对查询结果进行封装并返回
+        return new PageObject<>(pageCurrent,pageSize,rowCount,records);
+    }
+
 }

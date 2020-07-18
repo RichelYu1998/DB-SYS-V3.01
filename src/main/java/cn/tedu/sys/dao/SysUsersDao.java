@@ -1,5 +1,6 @@
 package cn.tedu.sys.dao;
 
+import cn.tedu.common.vo.SysUserDeptVo;
 import cn.tedu.sys.entity.SysUsers;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -64,5 +65,13 @@ public interface SysUsersDao {
      * @return 影响行数
      */
     int deleteById(Integer id);
-
+    /*
+     * 查询用户记录总数以及当前页面
+     * */
+    int getRowCount( String username);
+    List<SysUserDeptVo> findPageObjects(
+            String username,
+            Integer startIndex,
+            Integer pageSize
+    );
 }

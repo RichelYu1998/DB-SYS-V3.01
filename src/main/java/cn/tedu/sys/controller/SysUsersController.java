@@ -1,5 +1,6 @@
 package cn.tedu.sys.controller;
 
+import cn.tedu.common.vo.JsonResult;
 import cn.tedu.sys.entity.SysUsers;
 import cn.tedu.sys.service.SysUsersService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,4 +35,11 @@ public class SysUsersController {
         return this.sysUsersService.queryById(id);
     }
 
+    /*
+    *菜单查询
+    * */
+    @RequestMapping("doFindPageObjects")
+    public JsonResult doFindPageObjects(String username,Integer pageCurrent){
+        return new JsonResult(sysUsersService.findPageObjects(username, pageCurrent));
+    }
 }

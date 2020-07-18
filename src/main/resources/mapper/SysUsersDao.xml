@@ -129,5 +129,35 @@
     <delete id="deleteById">
         delete from jtsys.sys_users where id = #{id}
     </delete>
-
+    <sql id="queryWhereId">
+        from sys_users
+        <where>
+            <if test="username!=null and username!=''">
+                username like concat("%",#{username},"%")
+            </if>
+        </where>
+    </sql>
+    <!-- 按条件统计记录总数 -->
+    <select id="getRowCount" resultType="int">
+        select count(*)
+        <include refid="queryWhereId"/>
+    </select>
+    <!-- 分页查询 -->
+    <select id="findPageObjects" resultMap="sysUserDeptVo">
+        select *
+        <include refid="queryWhereId"/>
+        order by createdTime desc
+        limit #{startIndex},#{pageSize}
+    </select>
+    <resultMap type="cn.tedu.common.vo.SysUserDeptVo"
+               id="sysUserDeptVo">
+        <!-- 一般应用于 many2one 或 one2one 做关联查询
+        在当前应用是基于 deptId 查询部门信息并将其
+        存储到 SysUserDeptVo 对象的 sysDept 属性中。
+        -->
+        <association property="sysDept"
+                     column="deptId"
+                     select="cn.tedu.sys.dao.SysDeptsDao.findById">
+        </association>
+    </resultMap>
 </mapper>

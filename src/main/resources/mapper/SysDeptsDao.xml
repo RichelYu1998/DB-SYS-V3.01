@@ -108,5 +108,10 @@
     <delete id="deleteById">
         delete from jtsys.sys_depts where id = #{id}
     </delete>
-
+    <select id="findById"
+            resultType="cn.tedu.sys.entity.SysDepts">
+          select *
+          from sys_depts
+          where id=#{id}
+   </select>
 </mapper>

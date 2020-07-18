@@ -1,5 +1,7 @@
 package cn.tedu.sys.service;
 
+import cn.tedu.common.vo.SysUserDeptVo;
+import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysUsers;
 
 import java.util.List;
@@ -52,5 +54,8 @@ public interface SysUsersService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
-
+    /*
+     *分页查询操作
+     * */
+    PageObject<SysUserDeptVo> findPageObjects(String username,Integer pageCurrent);
 }

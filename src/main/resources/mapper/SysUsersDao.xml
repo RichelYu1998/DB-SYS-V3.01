@@ -168,4 +168,10 @@
          modifiedTime=now()
          where id=#{id}
     </update>
+    <!-- 用户查询 -->
+    <select id="findObjectById" parameterType="int" resultMap="sysUserDeptVo">
+         select *
+         from sys_users
+         where id=#{id}
+     </select>
 </mapper>

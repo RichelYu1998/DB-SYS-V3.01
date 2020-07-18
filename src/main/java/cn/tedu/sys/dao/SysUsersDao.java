@@ -81,4 +81,8 @@ public interface SysUsersDao {
             @Param("id")Integer id,
             @Param("valid")Integer valid,
             @Param("modifiedUser")String modifiedUser);
+    /*
+    * 基于用户 id 查询用户相关信息
+    * */
+    SysUserDeptVo findObjectById(Integer id);
 }

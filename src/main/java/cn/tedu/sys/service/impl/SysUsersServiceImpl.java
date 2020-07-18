@@ -3,15 +3,19 @@ package cn.tedu.sys.service.impl;
 import cn.tedu.common.annotation.RequiredLog;
 import cn.tedu.common.exception.ServiceException;
 import cn.tedu.common.vo.SysUserDeptVo;
+import cn.tedu.sys.dao.SysUserRolesDao;
 import cn.tedu.sys.dao.SysUsersDao;
 import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysUsers;
 import cn.tedu.sys.service.SysUsersService;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 系统用户(SysUsers)表服务实现类
@@ -23,6 +27,9 @@ import java.util.List;
 public class SysUsersServiceImpl implements SysUsersService {
     @Resource
     private SysUsersDao sysUsersDao;
+    @Resource
+    private SysUserRolesDao sysUserRoleDao;
+
 
     /**
      * 通过ID查询单条数据
@@ -109,18 +116,42 @@ public class SysUsersServiceImpl implements SysUsersService {
     @Override
     public int validById(Integer id, Integer valid) {
         //1.校验参数
-        if(id==null||id<1) {
-            if(id==null||id<=0)
-            throw new IllegalArgumentException("id值无效");
+        if (id == null || id < 1) {
+            if (id == null || id <= 0)
+                throw new IllegalArgumentException("id值无效");
         }
-        if(valid!=0&&valid!=1){
-            throw new IllegalArgumentException(valid+" 状态值无效");
+        if (valid != 0 && valid != 1) {
+            throw new IllegalArgumentException(valid + " 状态值无效");
         }
         //2.更新用户状态
-        int rows=sysUsersDao.validById(id, valid, "admin");//将来此用户为登陆
-        if(rows==0)
+        int rows = sysUsersDao.validById(id, valid, "admin");//将来此用户为登陆
+        if (rows == 0)
             throw new ServiceException("记录可能已经不存在");
         return rows;
     }
 
+    /*
+     * 基于 id 查询用户及相关信息
+     * */
+    @Transactional(readOnly = true)
+    @Override
+    public Map<String, Object> findObjectById(Integer id) {
+        //1.参数校验
+        if (id == null || id < 1)
+            throw new IllegalArgumentException("参数不正确");
+        //2.获取用户以及用户对应的部门信息
+        SysUserDeptVo user = sysUsersDao.findObjectById(id);
+        if (user == null)
+            throw new ServiceException("用户可能已经不存在了");
+        //3.获取用户对应的角色信息
+
+        List<Integer> roleIds = sysUserRoleDao.findRoleIdsByUserId(id);
+
+        //4.封装查询结果并返回
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", user);
+        map.put("roleIds", roleIds);
+        return map;
+
+    }
 }

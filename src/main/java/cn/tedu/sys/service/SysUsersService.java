@@ -5,6 +5,7 @@ import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysUsers;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 系统用户(SysUsers)表服务接口
@@ -62,4 +63,8 @@ public interface SysUsersService {
     * 加修改用户装填
     * */
     int validById(Integer id,Integer valid);
+    /*
+    * 基于 id 查询用户及相关信息
+    * */
+    Map<String, Object> findObjectById(Integer userId);
 }

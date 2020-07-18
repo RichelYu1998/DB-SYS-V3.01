@@ -68,4 +68,8 @@ public interface SysUserRolesDao {
      *基于角色 id 删除关系数据
      * */
     int deleteObjectsByRoleId(Integer roleId);
+    /*
+    * 义基于用户 id 查询角色 id 信息
+    * */
+    List<Integer> findRoleIdsByUserId(Integer id);
 }

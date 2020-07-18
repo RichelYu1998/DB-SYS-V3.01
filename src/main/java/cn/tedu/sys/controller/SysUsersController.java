@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * 系统用户(SysUsers)表控制层
@@ -46,5 +47,13 @@ public class SysUsersController {
     public JsonResult doValidById(Integer id, Integer valid){
         sysUsersService.validById(id, valid);
         return new JsonResult("update ok");
+    }
+    /*
+    * 基于用户 ID 查询用户
+    * */
+    @RequestMapping("doFindObjectById")
+    public JsonResult doFindObjectById(Integer id){
+        Map<String, Object> map = sysUsersService.findObjectById(id);
+        return new JsonResult(map);
     }
 }

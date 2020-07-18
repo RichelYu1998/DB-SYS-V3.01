@@ -174,4 +174,16 @@
          from sys_users
          where id=#{id}
      </select>
+    <!-- 用户更新 -->
+    <update id="updateObject"
+            parameterType="cn.tedu.sys.entity.SysUsers">
+        update sys_users
+        set username=#{username},
+            mobile=#{mobile},
+            email=#{email},
+            deptId=#{deptId},
+            modifiedTime=now(),
+            modifiedUser=#{modifiedUser}
+         where id=#{id}
+   </update>
 </mapper>

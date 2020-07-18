@@ -56,4 +56,14 @@ public class SysUsersController {
         Map<String, Object> map = sysUsersService.findObjectById(id);
         return new JsonResult(map);
     }
+    /*
+    * 更新角色
+    * */
+    @RequestMapping("doUpdateObject")
+    public JsonResult doUpdateObject(
+            SysUsers entity,Integer[] roleIds){
+        sysUsersService.updateObject(entity,roleIds);
+        return new JsonResult("update ok");
+
+    }
 }

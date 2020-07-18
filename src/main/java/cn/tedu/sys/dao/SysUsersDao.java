@@ -85,4 +85,8 @@ public interface SysUsersDao {
     * 基于用户 id 查询用户相关信息
     * */
     SysUserDeptVo findObjectById(Integer id);
+    /*
+    * 数据更新
+    * */
+    int updateObject(SysUsers entity);
 }

@@ -10,6 +10,7 @@ import cn.tedu.sys.entity.SysUsers;
 import cn.tedu.sys.service.SysUsersService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 
 import javax.annotation.Resource;
@@ -153,5 +154,25 @@ public class SysUsersServiceImpl implements SysUsersService {
         map.put("roleIds", roleIds);
         return map;
 
+    }
+    /*
+     * 更新角色对象
+     * */
+    @Override
+    public int updateObject(SysUsers entity, Integer[] roleIds) {
+        //1.参数有效性验证
+        if(entity==null)
+            throw new IllegalArgumentException("保存对象不能为空");
+        if(StringUtils.isEmpty(entity.getUsername()))
+            throw new IllegalArgumentException("用户名不能为空");
+        if(roleIds==null||roleIds.length==0)
+            throw new IllegalArgumentException("必须为其指定角色");
+        //其它验证自己实现，例如用户名已经存在，密码长度，...
+        //2.更新用户自身信息
+        int rows = sysUsersDao.updateObject(entity);
+        //3.保存用户与角色关系数据
+        sysUserRoleDao.deleteObjectsByUserId(entity.getId());
+        sysUserRoleDao.insertObjects(entity.getId(),roleIds);
+        return rows;
     }
 }

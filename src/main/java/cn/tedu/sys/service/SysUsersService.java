@@ -67,4 +67,8 @@ public interface SysUsersService {
     * 基于 id 查询用户及相关信息
     * */
     Map<String, Object> findObjectById(Integer userId);
+    /*
+    * 更新角色对象
+    * */
+    int updateObject(SysUsers entity,Integer[] roleIds);
 }

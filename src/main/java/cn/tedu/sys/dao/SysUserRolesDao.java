@@ -69,7 +69,14 @@ public interface SysUserRolesDao {
      * */
     int deleteObjectsByRoleId(Integer roleId);
     /*
-    * 义基于用户 id 查询角色 id 信息
+    * 基于用户 id 查询角色 id 信息
     * */
     List<Integer> findRoleIdsByUserId(Integer id);
+    /*
+    * 基于用户id删除
+    * */
+    int deleteObjectsByUserId(Integer userId);
+    int insertObjects(
+            @Param("userId")Integer userId,
+            @Param("roleIds")Integer[] roleIds);
 }

@@ -58,4 +58,8 @@ public interface SysUsersService {
      *分页查询操作
      * */
     PageObject<SysUserDeptVo> findPageObjects(String username,Integer pageCurrent);
+    /*
+    * 加修改用户装填
+    * */
+    int validById(Integer id,Integer valid);
 }

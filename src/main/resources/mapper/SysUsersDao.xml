@@ -160,4 +160,12 @@
                      select="cn.tedu.sys.dao.SysDeptsDao.findById">
         </association>
     </resultMap>
+    <!-- 修改用户状态 -->
+    <update id="validById">
+        update sys_users
+         set valid=#{valid},
+         modifiedUser=#{modifiedUser},
+         modifiedTime=now()
+         where id=#{id}
+    </update>
 </mapper>

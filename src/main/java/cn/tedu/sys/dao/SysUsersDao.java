@@ -74,4 +74,11 @@ public interface SysUsersDao {
             Integer startIndex,
             Integer pageSize
     );
+    /*
+    * 修改用户状态信息
+    * */
+    int validById(
+            @Param("id")Integer id,
+            @Param("valid")Integer valid,
+            @Param("modifiedUser")String modifiedUser);
 }

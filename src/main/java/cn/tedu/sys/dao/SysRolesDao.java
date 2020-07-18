@@ -1,5 +1,6 @@
 package cn.tedu.sys.dao;
 
+import cn.tedu.common.vo.CheckBox;
 import cn.tedu.common.vo.SysRoleMenuVo;
 import cn.tedu.sys.entity.SysRoles;
 import org.apache.ibatis.annotations.Mapper;
@@ -90,4 +91,8 @@ public interface SysRolesDao {
     * 数据更新
     * */
     int updateObject(SysRoles entity);
+    /*
+    * 查询角色
+    * */
+    List<CheckBox> findObjects();
 }

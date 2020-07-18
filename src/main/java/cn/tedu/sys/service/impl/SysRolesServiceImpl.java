@@ -1,6 +1,7 @@
 package cn.tedu.sys.service.impl;
 
 import cn.tedu.common.exception.ServiceException;
+import cn.tedu.common.vo.CheckBox;
 import cn.tedu.common.vo.SysRoleMenuVo;
 import cn.tedu.sys.dao.SysRoleMenusDao;
 import cn.tedu.sys.dao.SysRolesDao;
@@ -178,5 +179,12 @@ public class SysRolesServiceImpl implements SysRolesService {
         sysRoleMenuDao.insertObjects(entity.getId(),menuIds);
         //3.返回结果
         return rows;
+    }
+    /*
+     * 查询角色
+     * */
+    @Override
+    public List<CheckBox> findObjects() {
+        return sysRolesDao.findObjects();
     }
 }

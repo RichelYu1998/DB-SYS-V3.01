@@ -1,5 +1,6 @@
 package cn.tedu.sys.service;
 
+import cn.tedu.common.vo.CheckBox;
 import cn.tedu.common.vo.SysRoleMenuVo;
 import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysRoles;
@@ -75,4 +76,8 @@ public interface SysRolesService {
     * 更新角色对象
     * */
     int updateObject(SysRoles entity,Integer[] menuIds);
+    /*
+    * 查询角色
+    * */
+    List<CheckBox> findObjects();
 }

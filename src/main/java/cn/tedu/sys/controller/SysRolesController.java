@@ -77,4 +77,11 @@ public class SysRolesController {
         sysRolesService.updateObject(entity,menuIds);
         return new JsonResult("update ok");
     }
+    /*
+    * 查询角色
+    * */
+    @RequestMapping("doFindRoles")
+    public JsonResult doFindRoles(){
+        return new JsonResult(sysRolesService.findObjects());
+    }
 }

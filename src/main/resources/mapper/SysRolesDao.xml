@@ -154,5 +154,9 @@
              modifiedTime=now()
          where id=#{id}
      </update>
-
+    <!-- 角色查询 -->
+    <select id="findObjects" resultType="cn.tedu.common.vo.CheckBox">
+        select id,name
+        from sys_roles
+    </select>
 </mapper>

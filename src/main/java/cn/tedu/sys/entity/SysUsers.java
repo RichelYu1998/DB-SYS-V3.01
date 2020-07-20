@@ -14,50 +14,17 @@ import java.util.Date;
 @Data
 public class SysUsers implements Serializable {
     private static final long serialVersionUID = 325594955302027637L;
-
     private Integer id;
-    /**
-     * 用户名
-     */
     private String username;
-    /**
-     * 密码
-     */
-    private String password;
-    /**
-     * 盐  密码加密时前缀，使加密后的值不同
-     */
+    private String password;//md5
     private String salt;
-    /**
-     * 邮箱
-     */
     private String email;
-    /**
-     * 手机号
-     */
     private String mobile;
-    /**
-     * 状态  0：禁用   1：正常  默认值 ：1
-     */
-    private Object valid;
-
+    private Integer valid=1;
     private Integer deptId;
-    /**
-     * 创建时间
-     */
-    private Date createdtime;
-    /**
-     * 修改时间
-     */
-    private Date modifiedtime;
-    /**
-     * 创建用户
-     */
-    private String SysUsers;
-    /**
-     * 修改用户
-     */
+    private Date createdTime;
+    private Date modifiedTime;
+    private String createdUser;
     private String modifiedUser;
-
 
 }

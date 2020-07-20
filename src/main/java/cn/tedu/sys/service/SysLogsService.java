@@ -44,7 +44,7 @@ public interface SysLogsService {
      * @param sysLogs 实例对象
      * @return 实例对象
      */
-    SysLogs update(SysLogs sysLogs);
+   /* SysLogs update(SysLogs sysLogs);*/
 
     /**
      * 通过主键删除数据

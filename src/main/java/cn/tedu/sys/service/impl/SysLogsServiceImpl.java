@@ -62,11 +62,13 @@ public class SysLogsServiceImpl implements SysLogsService {
      * @param sysLogs 实例对象
      * @return 实例对象
      */
+/*
     @Override
     public SysLogs update(SysLogs sysLogs) {
         this.sysLogsDao.update(sysLogs);
         return this.queryById(sysLogs.getId());
     }
+*/
 
     /**
      * 通过主键删除数据

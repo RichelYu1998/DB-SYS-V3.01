@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 
 public class SysLogAspect {
-    @Pointcut("bean(sysUsersServiceImpl)")
+    @Pointcut("bean(SysUsersServiceImpl)")
     public void logPointCut(){}
     @Around("logPointCut()")
     public Object around(ProceedingJoinPoint jp) throws Throwable {

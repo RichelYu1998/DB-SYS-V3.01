@@ -1,32 +1,33 @@
 package cn.tedu.common.aspect;
 
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-
+import lombok.extern.slf4j.Slf4j;
 @Aspect
 @Slf4j
 @Component
 
 public class SysLogAspect {
-    @Pointcut("bean(SysUsersServiceImpl)")
-    public void logPointCut(){}
-    @Around("logPointCut()")
+//    @Pointcut("bean(sysUsersServiceImpl)")
+    @Pointcut("execution(* cn.tedu.sys.service.impl..*.*(..))")
+    public void doLogPointCut() {
+    }
+    @Around("doLogPointCut()")
     public Object around(ProceedingJoinPoint jp) throws Throwable {
-            try {
-                log.info("start:"+System.currentTimeMillis());
-                Object result = jp.proceed();//调用下一个切面方法或目标方法
-                log.info("after:"+System.currentTimeMillis());
-                return result;
-            }catch(Throwable e) {
-                log.error(e.getMessage());
-                throw e;
-            }
+        log.info("method start {}", System.currentTimeMillis());
+        try {
+            Object result = jp.proceed();//最终会执行目标方法
+            log.info("method end {}", System.currentTimeMillis());
+            return result;
+        } catch (Throwable e) {
+            log.error("method error {},error msg is {}", System.currentTimeMillis(), e.getMessage());
+            throw e;
         }
     }
+}
 /*
 * Tips:
     * @Aspect 注解用于标识或者描述 AOP 中的切面类型，基于切面类型构建的对象用于

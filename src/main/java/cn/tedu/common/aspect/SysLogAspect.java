@@ -23,7 +23,7 @@ public class SysLogAspect {
      * 	这里的涵义是当sysUserServiceImpl对象中的任意方法执行时，都由本切面
      * 	对象的通知方法做功能增强。
      */
-    @Pointcut("bean(sysUsersServiceImpl)")
+    @Pointcut("bean(sysUsersService)")
     public void doLogPointCut() {}//此方法中不需要写任何代码
 
     /**由@Around注解描述的方法为一个环绕通知方法，我们可以在此方法内部

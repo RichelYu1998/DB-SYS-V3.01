@@ -74,7 +74,7 @@ public class SysRolesServiceImpl implements SysRolesService {
     @Override
     public SysRoles update(SysRoles sysRoles) {
         this.sysRolesDao.update(sysRoles);
-        return this.queryById(sysRoles.getId());
+        return this.queryById(Long.valueOf(sysRoles.getId()));
     }
 
     /**
@@ -138,7 +138,7 @@ public class SysRolesServiceImpl implements SysRolesService {
         //2.保存角色自身信息
         int rows = sysRolesDao.insertObject(entity);
         //3.保存角色菜单关系数据
-        sysRoleMenuDao.insertObjects((entity.getId()),menuIds);
+        sysRoleMenuDao.insertObjects(Long.valueOf((entity.getId())),menuIds);
         //4.返回业务结果
         return rows;
     }
@@ -176,7 +176,7 @@ public class SysRolesServiceImpl implements SysRolesService {
         if(rows==0)
             throw new ServiceException("对象可能已经不存在");
         sysRoleMenuDao.deleteObjectsByRoleId(Math.toIntExact(entity.getId()));
-        sysRoleMenuDao.insertObjects(entity.getId(),menuIds);
+        sysRoleMenuDao.insertObjects(Long.valueOf(entity.getId()),menuIds);
         //3.返回结果
         return rows;
     }

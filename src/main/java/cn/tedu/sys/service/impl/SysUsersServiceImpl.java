@@ -8,6 +8,7 @@ import cn.tedu.sys.dao.SysUsersDao;
 import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysUsers;
 import cn.tedu.sys.service.SysUsersService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import org.thymeleaf.util.StringUtils;
 
 
 import javax.annotation.Resource;
+import java.security.Security;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -206,6 +208,35 @@ public class SysUsersServiceImpl implements SysUsersService {
         //3.保存用户角色关系数据
         sysUserRoleDao.insertObjects(entity.getId(),roleIds);
         //4.返回结果
+        return rows;
+    }
+    /*
+     * 修改密码
+     * */
+    @Override
+    public int updatePassword(String password, String newPassword, String cfgPassword) {
+        //1.判定新密码与密码确认是否相同
+        if(StringUtils.isEmpty(newPassword))
+            throw new IllegalArgumentException("新密码不能为空");
+        if(StringUtils.isEmpty(cfgPassword))
+            throw new IllegalArgumentException("确认密码不能为空");
+        if(!newPassword.equals(cfgPassword))
+            throw new IllegalArgumentException("两次输入的密码不相等");
+        //2.判定原密码是否正确
+        if(StringUtils.isEmpty(password))
+            throw new IllegalArgumentException("原密码不能为空");
+        //获取登陆用户
+        SysUsers user = (SysUsers) SecurityUtils.getSubject().getPrincipal();
+        SimpleHash sh = new SimpleHash("MD5", password, user.getSalt(), 1);
+        if(!user.getPassword().equals(sh.toHex()))
+            throw new IllegalArgumentException("原密码不正确");
+        //3.对新密码进行加密
+        String salt = UUID.randomUUID().toString();
+        sh=new SimpleHash("MD5", newPassword, salt, 1);
+        //4.将新密码加密以后的结果更新到数据
+        int rows = sysUsersDao.updatePassword(sh.toHex(), salt, user.getId());
+        if(rows==0)
+            throw new ServiceException("修改失败");
         return rows;
     }
 }

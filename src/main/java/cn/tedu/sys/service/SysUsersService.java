@@ -75,4 +75,10 @@ public interface SysUsersService {
     * 保存用户对象
     * */
     int saveObject(SysUsers entity,Integer[]roleIds);
+    /*
+    * 修改密码
+    * */
+    int updatePassword(String password,
+                       String newPassword,
+                       String cfgPassword);
 }

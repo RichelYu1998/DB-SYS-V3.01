@@ -74,4 +74,12 @@ public class SysUsersController {
         sysUsersService.saveObject(entity,roleIds);
         return new JsonResult("save ok");
     }
+    /*
+    * 密码修改
+    * */
+    @RequestMapping("doUpdatePassword")
+    public JsonResult doUpdatePassword(String pwd, String newPwd, String cfgPwd){
+        sysUsersService.updatePassword(pwd, newPwd, cfgPwd);
+        return new JsonResult("update ok");
+    }
 }

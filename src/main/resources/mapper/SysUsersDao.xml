@@ -195,4 +195,12 @@
         (#{username},#{password},#{deptId},#{email},#{mobile},#{salt},#{valid},
          now(),now(),#{createdUser},#{modifiedUser})
     </insert>
+    <!-- 修改密码 -->
+    <update id="updatePassword">
+        update sys_users
+         set password=#{password},
+         salt=#{salt},
+         modifiedTime=now()
+         where id=#{id}
+    </update>
 </mapper>

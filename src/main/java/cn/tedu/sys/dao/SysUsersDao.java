@@ -5,6 +5,7 @@ import cn.tedu.sys.entity.SysUsers;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import javax.annotation.security.PermitAll;
 import java.util.List;
 
 /**
@@ -93,4 +94,12 @@ public interface SysUsersDao {
     * 用户提交
     * */
     int insertObject(SysUsers entity);
+    /*
+    * 修改用户密码信息
+    * */
+    int updatePassword(
+            @Param("password")String password,
+            @Param("salt")String salt,
+            @Param("id")Integer id
+    );
 }

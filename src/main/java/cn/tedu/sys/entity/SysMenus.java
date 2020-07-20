@@ -16,51 +16,18 @@ public class SysMenus implements Serializable {
     private static final long serialVersionUID = 808370860595569121L;
 
     private Integer id;
-    /**
-     * 资源名称
-     */
+    /**菜单名称*/
     private String name;
-    /**
-     * 资源URL
-     */
+    /**菜单 url: log/doFindPageObjects*/
     private String url;
-    /**
-     * 类型     1：菜单   2：按钮
-     */
-    private Integer type;
-    /**
-     * 排序
-     */
+    /**菜单类型(两种:按钮,普通菜单)*/
+    private Integer type=1;
+    /**排序(序号)*/
     private Integer sort;
-    /**
-     * 备注
-     */
+    /**备注*/
     private String note;
-    /**
-     * 父菜单ID，一级菜单为0
-     */
+    /**上级菜单 id*/
     private Integer parentId;
-    /**
-     * 授权(如：user:create)
-     */
+    /**菜单对应的权限标识(sys:log:delete)*/
     private String permission;
-    /**
-     * 创建时间
-     */
-    private Date createdtime;
-    /**
-     * 修改时间
-     */
-    private Date modifiedtime;
-    /**
-     * 创建用户
-     */
-    private String createduser;
-    /**
-     * 修改用户
-     */
-    private String modifiedUser;
-
-
-
 }

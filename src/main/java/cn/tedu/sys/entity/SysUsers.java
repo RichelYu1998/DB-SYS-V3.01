@@ -53,7 +53,7 @@ public class SysUsers implements Serializable {
     /**
      * 创建用户
      */
-    private String createduser;
+    private String SysUsers;
     /**
      * 修改用户
      */

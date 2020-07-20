@@ -1,8 +1,10 @@
 package cn.tedu.sys.service;
 
+import cn.tedu.common.vo.Node;
 import cn.tedu.sys.entity.SysDepts;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 部门管理(SysDepts)表服务接口
@@ -52,5 +54,9 @@ public interface SysDeptsService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
-
+    List<Map<String,Object>> findObjects();
+    List<Node> findZTreeNodes();
+    int saveObject(SysDepts entity);
+    int updateObject(SysDepts entity);
+    int deleteObject(Integer id);
 }

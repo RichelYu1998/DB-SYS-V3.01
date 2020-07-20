@@ -66,4 +66,12 @@ public class SysUsersController {
         return new JsonResult("update ok");
 
     }
+    /*
+    * 保存用户数据
+    * */
+    @RequestMapping("doSaveObject")
+    public JsonResult doSaveObject(SysUsers entity, Integer[] roleIds){
+        sysUsersService.saveObject(entity,roleIds);
+        return new JsonResult("save ok");
+    }
 }

@@ -186,4 +186,13 @@
             modifiedUser=#{modifiedUser}
          where id=#{id}
    </update>
+    <!-- 写入用户信息 -->
+    <insert id="insertObject" parameterType="cn.tedu.sys.entity.SysUsers" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_users
+         (username,password,deptId,email,mobile,salt,valid,
+         createdTime,modifiedTime,createdUser,modifiedUser)
+         values
+        (#{username},#{password},#{deptId},#{email},#{mobile},#{salt},#{valid},
+         now(),now(),#{createdUser},#{modifiedUser})
+    </insert>
 </mapper>

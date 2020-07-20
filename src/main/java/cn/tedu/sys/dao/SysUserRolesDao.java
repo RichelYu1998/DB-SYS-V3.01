@@ -76,6 +76,9 @@ public interface SysUserRolesDao {
     * 基于用户id删除
     * */
     int deleteObjectsByUserId(Integer userId);
+    /*
+     * 用户提交
+     * */
     int insertObjects(
             @Param("userId")Integer userId,
             @Param("roleIds")Integer[] roleIds);

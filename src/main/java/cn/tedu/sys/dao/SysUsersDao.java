@@ -89,4 +89,8 @@ public interface SysUsersDao {
     * 数据更新
     * */
     int updateObject(SysUsers entity);
+    /*
+    * 用户提交
+    * */
+    int insertObject(SysUsers entity);
 }

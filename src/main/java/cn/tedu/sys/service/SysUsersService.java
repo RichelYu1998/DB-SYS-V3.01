@@ -71,4 +71,8 @@ public interface SysUsersService {
     * 更新角色对象
     * */
     int updateObject(SysUsers entity,Integer[] roleIds);
+    /*
+    * 保存用户对象
+    * */
+    int saveObject(SysUsers entity,Integer[]roleIds);
 }

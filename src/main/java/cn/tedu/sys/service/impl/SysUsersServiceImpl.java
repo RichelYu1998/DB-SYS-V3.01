@@ -8,6 +8,7 @@ import cn.tedu.sys.dao.SysUsersDao;
 import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysUsers;
 import cn.tedu.sys.service.SysUsersService;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 系统用户(SysUsers)表服务实现类
@@ -173,6 +175,37 @@ public class SysUsersServiceImpl implements SysUsersService {
         //3.保存用户与角色关系数据
         sysUserRoleDao.deleteObjectsByUserId(entity.getId());
         sysUserRoleDao.insertObjects(entity.getId(),roleIds);
+        return rows;
+    }
+    /*
+     * 保存用户对象
+     * */
+    @Override
+    public int saveObject(SysUsers entity, Integer[] roleIds) {
+        //1.参数校验
+        if(entity==null)
+            throw new IllegalArgumentException("保存对象不能为空");
+        if(StringUtils.isEmpty(entity.getUsername()))
+            throw new IllegalArgumentException("用户名不能为空");
+        if(StringUtils.isEmpty(entity.getPassword()))
+            throw new IllegalArgumentException("密码不能为空");
+        if(roleIds==null||roleIds.length==0)
+            throw new IllegalArgumentException("至少要为用户分配角色");
+        //2.保存用户自身信息
+        //2.1 对密码进行加密
+        String source=entity.getPassword();
+        String salt= UUID.randomUUID().toString();
+        SimpleHash sh = new SimpleHash(//Shiro 框架
+                "MD5",//algorithmName 算法
+                source,//原密码
+                salt,//颜值
+                1);//hashIterations 表示加密次数
+        entity.setSalt(salt);
+        entity.setPassword(sh.toHex());
+        int rows = sysUsersDao.insertObject(entity);
+        //3.保存用户角色关系数据
+        sysUserRoleDao.insertObjects(entity.getId(),roleIds);
+        //4.返回结果
         return rows;
     }
 }

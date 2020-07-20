@@ -1,44 +1,56 @@
 package cn.tedu.common.aspect;
 
+
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import lombok.extern.slf4j.Slf4j;
 @Aspect
-@Slf4j
+//@Slf4j
 @Component
 
 public class SysLogAspect {
-//    @Pointcut("bean(sysUsersServiceImpl)")
-    @Pointcut("execution(* cn.tedu.sys.service.impl..*.*(..))")
-    public void doLogPointCut() {
-    }
-    @Around("doLogPointCut()")
-    public Object around(ProceedingJoinPoint jp) throws Throwable {
-        log.info("method start {}", System.currentTimeMillis());
+    private static final Logger log =
+            LoggerFactory.getLogger(SysLogAspect.class);
+    /**
+     * PointCut注解用于定义切入点，具体方式可以基于特定表达式进行实现。例如
+     * 1)bean为一种切入点表达式类型
+     * 2)sysUserServiceImpl 为spring容器中的一个bean的名字
+     * 	这里的涵义是当sysUserServiceImpl对象中的任意方法执行时，都由本切面
+     * 	对象的通知方法做功能增强。
+     */
+    @Pointcut("bean(sysUsersServiceImpl)")
+    public void doLogPointCut() {}//此方法中不需要写任何代码
+
+    /**由@Around注解描述的方法为一个环绕通知方法，我们可以在此方法内部
+     * 手动调用目标方法(通过连接点对象ProceedingJoinPoint的proceed方法进行调用)
+     * 环绕通知：此环绕通知使用的切入点为bean(sysUserServiceImpl)
+     * 环绕通知特点：
+     1)编写：
+     a)方法的返回值为Object.
+     b)方法参数为ProceedingJoinPoint类型.
+     c)方法抛出异常为throwable.
+     2)应用：
+     a)目标方法执行之前或之后都可以进行功能拓展
+     b)相对于其它通知优先级最高。
+     @param jp 为一个连接对象(封装了正在要执行的目标方法信息)
+     @return 目标方法的执行结果
+     */
+    @Around(value="doLogPointCut()")
+    public Object around(ProceedingJoinPoint jp)throws Throwable{
+        log.info("method start {}",System.currentTimeMillis());
         try {
-            Object result = jp.proceed();//最终会执行目标方法
-            log.info("method end {}", System.currentTimeMillis());
+            Object result=jp.proceed();//最终会执行目标方法(sysUserServiceImpl对象中的方法)
+            log.info("method end {}",System.currentTimeMillis());
             return result;
-        } catch (Throwable e) {
-            log.error("method error {},error msg is {}", System.currentTimeMillis(), e.getMessage());
+        }catch(Throwable e) {
+            log.error("method error {},error msg is {}",
+                    System.currentTimeMillis(),e.getMessage());
             throw e;
         }
     }
 }
-/*
-* Tips:
-    * @Aspect 注解用于标识或者描述 AOP 中的切面类型，基于切面类型构建的对象用于
-    为目标对象进行功能扩展或控制目标对象的执行。
-    ▪ @Pointcut 注解用于描述切面中的方法，并定义切面中的切入点（基于特定表达式的
-    方式进行描述），在本案例中切入点表达式用的是 bean 表达式，这个表达式以 bean
-    开头，bean 括号中的内容为一个 spring 管理的某个 bean 对象的名字。
-    ▪ @Around 注解用于描述切面中方法，这样的方法会被认为是一个环绕通知（核心业
-    务方法执行之前和之后要执行的一个动作），@Aournd 注解内部 value 属性的值为
-    一个切入点表达式或者是切入点表达式的一个引用(这个引用为一个@PointCut 注解
-    描述的方法的方法名)。
-    ▪ ProceedingJoinPoint 类为一个连接点类型，此类型的对象用于封装要执行的目标方
-    法相关的一些信息。一般用于@Around 注解描述的方法参数。
-* */

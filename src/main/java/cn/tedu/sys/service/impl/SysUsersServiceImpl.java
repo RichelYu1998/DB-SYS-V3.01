@@ -97,6 +97,7 @@ public class SysUsersServiceImpl implements SysUsersService {
     /*
      *分页查询操作
      * */
+    @RequiredLog("用户分页查询")
     @Override
     public PageObject<SysUserDeptVo> findPageObjects(String username, Integer pageCurrent) {
         //1.对参数进行校验

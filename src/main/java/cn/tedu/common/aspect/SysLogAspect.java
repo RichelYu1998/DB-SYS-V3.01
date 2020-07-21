@@ -39,7 +39,7 @@ public class SysLogAspect {
      * 	这里的涵义是当sysUserServiceImpl对象中的任意方法执行时，都由本切面
      * 	对象的通知方法做功能增强。
      */
-    @Pointcut("bean(sysUserServiceImpl)")
+    @Pointcut("bean(sysUsersService)")
     //注解方式的切入点表达式
     //@Pointcut("@annotation(com.cy.pj.common.annotation.RequiredLog)")
     public void doLogPointCut() {}//此方法中不需要写任何代码

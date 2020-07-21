@@ -92,7 +92,7 @@ public class SysLogAspect {
         String params = new ObjectMapper().writeValueAsString(paramsObj);
         //2.封装日志信息
         SysLogs log = new SysLogs();
-        log.setUsername("username");//登陆的用户
+        log.setUsername(username);//登陆的用户
         //假如目标方法对象上有注解,我们获取注解定义的操作值
         targetMethod.getDeclaredAnnotation(RequiredLog.class);
         log.setMethod(className+"."+methodName);//className.methodName()

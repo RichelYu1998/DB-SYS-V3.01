@@ -1,5 +1,7 @@
 package cn.tedu.sys.service.impl;
 
+import cn.tedu.common.annotation.RemovedCache;
+import cn.tedu.common.annotation.RequiredCache;
 import cn.tedu.common.exception.ServiceException;
 import cn.tedu.common.vo.Node;
 import cn.tedu.sys.dao.SysDeptsDao;
@@ -22,7 +24,7 @@ import java.util.Map;
 public class SysDeptsServiceImpl implements SysDeptsService {
     @Resource
     private SysDeptsDao sysDeptsDao;
-
+    @RequiredCache(key="deptKey")
     /**
      * 通过ID查询单条数据
      *
@@ -114,6 +116,7 @@ public class SysDeptsServiceImpl implements SysDeptsService {
         //3.返回数据
         return rows;
     }
+    @RemovedCache(key="deptKey")
     @Override
     public int saveObject(SysDepts entity) {
         //1.合法验证
@@ -128,6 +131,7 @@ public class SysDeptsServiceImpl implements SysDeptsService {
         //3.返回数据
         return rows;
     }
+    @RemovedCache(key="deptKey")
     @Override
     public int deleteObject(Integer id) {
         //1.合法性验证

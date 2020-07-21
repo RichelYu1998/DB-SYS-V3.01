@@ -21,6 +21,7 @@ public class SysCacheAspect {
     //借助此对象缓存从数据库查询到的数据
     private Map<String,Object> cache=new ConcurrentHashMap<>();
 
+
     @Pointcut("bean(*Service)")
     public void removeCache() {}
 
@@ -31,7 +32,7 @@ public class SysCacheAspect {
      * @param jp
      * @throws Exception
      */
-    @AfterReturning("removeCache()")
+    @AfterReturning("@annotation(cn.tedu.common.annotation.RemovedCache)")
     public void doAfterReturning(JoinPoint jp)throws Exception {
         //获取目标方法
         Method targetMethod = doGetTargetMethod(jp);
@@ -54,7 +55,7 @@ public class SysCacheAspect {
         return targetMethod;
     }
     //ProceedingJoinPoint
-    @Around("requiredCache()")
+    @Around("@annotation(cn.tedu.common.annotation.RequiredCache)")
     public Object around(ProceedingJoinPoint jp)throws Throwable{
         //0.获取目标方法以及目标方法上的RequiredCache注解
         Method targetMethod=doGetTargetMethod(jp);

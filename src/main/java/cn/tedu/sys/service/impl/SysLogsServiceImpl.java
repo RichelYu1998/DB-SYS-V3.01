@@ -120,4 +120,11 @@ public class SysLogsServiceImpl implements SysLogsService {
             throw new ServiceException("记录可能已经不存在");
         return rows;
     }
+    /*
+     * 保存日志
+     * */
+    @Override
+    public void saveObject(SysLogs entity) {
+        sysLogsDao.insertObject(entity);
+    }
 }

@@ -66,4 +66,8 @@ public interface SysLogsService {
     * 基于多个 id 进行日志删除
     * */
     int deleteObjects(Integer... ids);
+    /*
+    * 保存日志
+    * */
+    void saveObject(SysLogs entity);
 }

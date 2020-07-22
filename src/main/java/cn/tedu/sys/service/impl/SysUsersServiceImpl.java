@@ -10,12 +10,16 @@ import cn.tedu.sys.entity.SysUsers;
 import cn.tedu.sys.service.SysUsersService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 
 import javax.annotation.Resource;
+import javax.swing.text.TabableView;
 import java.security.Security;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +32,11 @@ import java.util.UUID;
  * @author makejava
  * @since 2020-07-10 16:38:25
  */
+@Transactional(timeout = 30,
+        readOnly = false,
+        isolation = Isolation.READ_COMMITTED,
+        rollbackFor = Throwable.class,
+        propagation = Propagation.REQUIRED)
 @Service("sysUsersService")
 public class SysUsersServiceImpl implements SysUsersService {
     @Resource
@@ -97,6 +106,7 @@ public class SysUsersServiceImpl implements SysUsersService {
     /*
      *分页查询操作
      * */
+    @Transactional(readOnly = true)
     @RequiredLog("用户分页查询")
     @Override
     public PageObject<SysUserDeptVo> findPageObjects(String username, Integer pageCurrent) {
@@ -160,44 +170,48 @@ public class SysUsersServiceImpl implements SysUsersService {
         return map;
 
     }
+
     /*
      * 更新角色对象
      * */
     @Override
     public int updateObject(SysUsers entity, Integer[] roleIds) {
         //1.参数有效性验证
-        if(entity==null)
+        if (entity == null)
             throw new IllegalArgumentException("保存对象不能为空");
-        if(StringUtils.isEmpty(entity.getUsername()))
+        if (StringUtils.isEmpty(entity.getUsername()))
             throw new IllegalArgumentException("用户名不能为空");
-        if(roleIds==null||roleIds.length==0)
+        if (roleIds == null || roleIds.length == 0)
             throw new IllegalArgumentException("必须为其指定角色");
         //其它验证自己实现，例如用户名已经存在，密码长度，...
         //2.更新用户自身信息
         int rows = sysUsersDao.updateObject(entity);
         //3.保存用户与角色关系数据
         sysUserRoleDao.deleteObjectsByUserId(entity.getId());
-        sysUserRoleDao.insertObjects(entity.getId(),roleIds);
+        sysUserRoleDao.insertObjects(entity.getId(), roleIds);
         return rows;
     }
+
     /*
      * 保存用户对象
      * */
+    @Async
+    @Transactional(propagation=Propagation.REQUIRES_NEW)
     @Override
     public int saveObject(SysUsers entity, Integer[] roleIds) {
         //1.参数校验
-        if(entity==null)
+        if (entity == null)
             throw new IllegalArgumentException("保存对象不能为空");
-        if(StringUtils.isEmpty(entity.getUsername()))
+        if (StringUtils.isEmpty(entity.getUsername()))
             throw new IllegalArgumentException("用户名不能为空");
-        if(StringUtils.isEmpty(entity.getPassword()))
+        if (StringUtils.isEmpty(entity.getPassword()))
             throw new IllegalArgumentException("密码不能为空");
-        if(roleIds==null||roleIds.length==0)
+        if (roleIds == null || roleIds.length == 0)
             throw new IllegalArgumentException("至少要为用户分配角色");
         //2.保存用户自身信息
         //2.1 对密码进行加密
-        String source=entity.getPassword();
-        String salt= UUID.randomUUID().toString();
+        String source = entity.getPassword();
+        String salt = UUID.randomUUID().toString();
         SimpleHash sh = new SimpleHash(//Shiro 框架
                 "MD5",//algorithmName 算法
                 source,//原密码
@@ -207,36 +221,37 @@ public class SysUsersServiceImpl implements SysUsersService {
         entity.setPassword(sh.toHex());
         int rows = sysUsersDao.insertObject(entity);
         //3.保存用户角色关系数据
-        sysUserRoleDao.insertObjects(entity.getId(),roleIds);
+        sysUserRoleDao.insertObjects(entity.getId(), roleIds);
         //4.返回结果
         return rows;
     }
+
     /*
      * 修改密码
      * */
     @Override
     public int updatePassword(String password, String newPassword, String cfgPassword) {
         //1.判定新密码与密码确认是否相同
-        if(StringUtils.isEmpty(newPassword))
+        if (StringUtils.isEmpty(newPassword))
             throw new IllegalArgumentException("新密码不能为空");
-        if(StringUtils.isEmpty(cfgPassword))
+        if (StringUtils.isEmpty(cfgPassword))
             throw new IllegalArgumentException("确认密码不能为空");
-        if(!newPassword.equals(cfgPassword))
+        if (!newPassword.equals(cfgPassword))
             throw new IllegalArgumentException("两次输入的密码不相等");
         //2.判定原密码是否正确
-        if(StringUtils.isEmpty(password))
+        if (StringUtils.isEmpty(password))
             throw new IllegalArgumentException("原密码不能为空");
         //获取登陆用户
         SysUsers user = (SysUsers) SecurityUtils.getSubject().getPrincipal();
         SimpleHash sh = new SimpleHash("MD5", password, user.getSalt(), 1);
-        if(!user.getPassword().equals(sh.toHex()))
+        if (!user.getPassword().equals(sh.toHex()))
             throw new IllegalArgumentException("原密码不正确");
         //3.对新密码进行加密
         String salt = UUID.randomUUID().toString();
-        sh=new SimpleHash("MD5", newPassword, salt, 1);
+        sh = new SimpleHash("MD5", newPassword, salt, 1);
         //4.将新密码加密以后的结果更新到数据
         int rows = sysUsersDao.updatePassword(sh.toHex(), salt, user.getId());
-        if(rows==0)
+        if (rows == 0)
             throw new ServiceException("修改失败");
         return rows;
     }

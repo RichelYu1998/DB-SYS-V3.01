@@ -17,6 +17,15 @@ spring:
     cache: false
     prefix: classpath:/templates/pages/
     suffix: .html
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 128
+        queue-capacity: 128
+        keep-alive: 60000
+      thread-name-prefix: db-service-task-
+
 mybatis:
   mapper-locations:
     - classpath:/mapper/*.xml

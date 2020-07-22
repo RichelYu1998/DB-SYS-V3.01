@@ -3,8 +3,9 @@ package cn.tedu.common.aspect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
+@Order(2)
 @Component
 @Aspect
 public class SysTimeAspect {

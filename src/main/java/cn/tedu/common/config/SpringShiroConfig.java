@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
 @Configuration
 public class SpringShiroConfig {
     @Bean
-    public DefaultWebSecurityManager securityManager() {
+    public SecurityManager securityManager() {
         DefaultWebSecurityManager sManager=
                 new DefaultWebSecurityManager();
         return sManager;
@@ -20,9 +20,9 @@ public class SpringShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager){
         ShiroFilterFactoryBean sfBean = new ShiroFilterFactoryBean();
         sfBean.setSecurityManager(securityManager);
-        //定义 map 指定请求过滤规则(哪些资源允许匿名访问,哪些必须认证访问)
-        LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        //静态资源允许匿名访问:"anon"
+    //定义 map 指定请求过滤规则(哪些资源允许匿名访问,哪些必须认证访问)
+        LinkedHashMap<String,String> map= new LinkedHashMap<>();
+    //静态资源允许匿名访问:"anon"
         map.put("/bower_components/**","anon");
         map.put("/modules/**","anon");
         map.put("/dist/**","anon");

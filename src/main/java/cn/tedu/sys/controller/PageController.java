@@ -44,4 +44,11 @@ public class PageController {
     public String doModuleUI(@PathVariable String moduleUI) {
         return "sys/" + moduleUI;
     }
+    /*
+    * 登录验证
+    * */
+    @RequestMapping("doLoginUI")
+    public String doLoginUI(){
+        return "login";
+    }
 }

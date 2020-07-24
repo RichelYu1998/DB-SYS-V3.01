@@ -102,4 +102,8 @@ public interface SysUsersDao {
             @Param("salt")String salt,
             @Param("id")Integer id
     );
+    /*
+    * 根据用户名获取用户对象
+    * */
+    SysUsers findUserByUserName(String username);
 }

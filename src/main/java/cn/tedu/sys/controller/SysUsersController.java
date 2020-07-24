@@ -3,6 +3,9 @@ package cn.tedu.sys.controller;
 import cn.tedu.common.vo.JsonResult;
 import cn.tedu.sys.entity.SysUsers;
 import cn.tedu.sys.service.SysUsersService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -81,5 +84,21 @@ public class SysUsersController {
     public JsonResult doUpdatePassword(String pwd, String newPwd, String cfgPwd){
         sysUsersService.updatePassword(pwd, newPwd, cfgPwd);
         return new JsonResult("update ok");
+    }
+    /*
+    * 处理登陆
+    * */
+    @RequestMapping("doLogin")
+    public JsonResult doLogin(String username,String password){
+        //1.获取 Subject 对象
+        Subject subject = SecurityUtils.getSubject();
+        //2.通过 Subject 提交用户信息,交给 shiro 框架进行认证操作
+        //2.1 对用户进行封装
+        UsernamePasswordToken token = new UsernamePasswordToken(
+                username,//身份信息
+                password);//凭证信息
+        //2.2 对用户信息进行身份认证
+        subject.login(token);
+        return new JsonResult("login ok");
     }
 }

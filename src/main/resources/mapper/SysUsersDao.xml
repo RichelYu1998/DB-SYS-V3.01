@@ -203,4 +203,10 @@
          modifiedTime=now()
          where id=#{id}
     </update>
+    <!-- 基于用户名获取用户对象 -->
+    <select id="findUserByUserName" resultType="cn.tedu.sys.entity.SysUsers">
+        select *
+         from sys_users
+         where username=#{username}
+    </select>
 </mapper>

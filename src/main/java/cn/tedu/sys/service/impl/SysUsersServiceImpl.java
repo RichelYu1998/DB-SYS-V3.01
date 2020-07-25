@@ -9,6 +9,7 @@ import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysUsers;
 import cn.tedu.sys.service.SysUsersService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -128,6 +129,7 @@ public class SysUsersServiceImpl implements SysUsersService {
     /*
      *禁用，启用业务
      * */
+    @RequiresPermissions("sys:user:update")
     @RequiredLog("禁用启用")
     @Override
     public int validById(Integer id, Integer valid) {

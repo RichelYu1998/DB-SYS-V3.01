@@ -91,4 +91,8 @@ public interface SysMenusDao {
     * 数据更新
     * */
     int updateObject(SysMenus entity);
+    /*
+    * 基于菜单 id 查找权限标识
+    * */
+    List<String> findPermissions(@Param("menuIds") Integer[] menuIds);
 }

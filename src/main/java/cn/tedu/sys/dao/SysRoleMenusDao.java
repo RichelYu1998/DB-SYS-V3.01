@@ -79,4 +79,8 @@ public interface SysRoleMenusDao {
     int insertObjects(
             @Param("roleId") Long roleId,
             @Param("menuIds")Integer[] menuIds);
+    /*
+    * 基于角色 id 查找菜单 id
+    * */
+    List<Integer> findMenuIdsByRoleIds(@Param("roleIds")Integer[] roleIds);
 }

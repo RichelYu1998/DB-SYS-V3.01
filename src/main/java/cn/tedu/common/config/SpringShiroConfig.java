@@ -2,11 +2,14 @@ package cn.tedu.common.config;
 
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
+import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,11 +18,12 @@ import java.util.LinkedHashMap;
 @Configuration
 public class SpringShiroConfig {
     @Bean
-    public SecurityManager securityManager(Realm realm,CacheManager cacheManager) {
+    public SecurityManager securityManager(Realm realm, CacheManager cacheManager,RememberMeManager rememberManager) {
         DefaultWebSecurityManager sManager=
                 new DefaultWebSecurityManager();
         sManager.setRealm(realm);
         sManager.setCacheManager(cacheManager);
+        sManager.setRememberMeManager(rememberManager);
         return sManager;
     }
     @Bean
@@ -55,5 +59,13 @@ public class SpringShiroConfig {
     protected CacheManager shiroCacheManager() {
         return new MemoryConstrainedCacheManager();
     }
-
+    @Bean
+    public RememberMeManager rememberMeManager() {
+        CookieRememberMeManager cManager=
+                new CookieRememberMeManager();
+        SimpleCookie cookie=new SimpleCookie("rememberMe");
+        cookie.setMaxAge(7*24*60*60);
+        cManager.setCookie(cookie);
+        return cManager;
+    }
 }

@@ -5,11 +5,13 @@ import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,12 +20,13 @@ import java.util.LinkedHashMap;
 @Configuration
 public class SpringShiroConfig {
     @Bean
-    public SecurityManager securityManager(Realm realm, CacheManager cacheManager,RememberMeManager rememberManager) {
+    public SecurityManager securityManager(Realm realm, CacheManager cacheManager,RememberMeManager rememberManager,SessionManager sessionManager) {
         DefaultWebSecurityManager sManager=
                 new DefaultWebSecurityManager();
         sManager.setRealm(realm);
         sManager.setCacheManager(cacheManager);
         sManager.setRememberMeManager(rememberManager);
+        sManager.setSessionManager(sessionManager);
         return sManager;
     }
     @Bean
@@ -67,5 +70,12 @@ public class SpringShiroConfig {
         cookie.setMaxAge(7*24*60*60);
         cManager.setCookie(cookie);
         return cManager;
+    }
+    @Bean
+    public SessionManager sessionManager() {
+        DefaultWebSessionManager sManager=
+                new DefaultWebSessionManager();
+        sManager.setGlobalSessionTimeout(60*60*1000);
+        return sManager;
     }
 }

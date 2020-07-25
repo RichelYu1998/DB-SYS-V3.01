@@ -1,11 +1,16 @@
 package cn.tedu.common.aspect;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Date;
 
 import cn.tedu.common.annotation.RequiredLog;
 import cn.tedu.common.util.IPUtils;
+import cn.tedu.common.util.ShiroUtils;
 import cn.tedu.sys.entity.SysLogs;
 import cn.tedu.sys.service.SysLogsService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -25,89 +30,110 @@ import javax.annotation.Resource;
  * 1)切入点(定义在哪些目标对象的哪些方法上进行功能扩展)
  * 2)通知(封装功能扩展的业务逻辑)
  */
-//@Slf4j
+@Slf4j
 @Order(1)
 @Aspect
 @Component
 public class SysLogAspect {
-    private static final Logger log =
-            LoggerFactory.getLogger(SysLogAspect.class);
     /**
-     * PointCut注解用于定义切入点，具体方式可以基于特定表达式进行实现。例如
-     * 1)bean为一种切入点表达式类型
-     * 2)sysUserServiceImpl 为spring容器中的一个bean的名字
-     * 	这里的涵义是当sysUserServiceImpl对象中的任意方法执行时，都由本切面
-     * 	对象的通知方法做功能增强。
+     * @Pointcut 注解通过切入点表达式定义切入点，例如
+     * bean表达式:bean(bean的名称)
      */
-    @Pointcut("bean(sysUsersService)")
-    //注解方式的切入点表达式
-    //@Pointcut("@annotation(com.cy.pj.common.annotation.RequiredLog)")
-    public void doLogPointCut() {}//此方法中不需要写任何代码
-
-    /**由@Around注解描述的方法为一个环绕通知方法，我们可以在此方法内部
-     * 手动调用目标方法(通过连接点对象ProceedingJoinPoint的proceed方法进行调用)
-     * 环绕通知：此环绕通知使用的切入点为bean(sysUserServiceImpl)
-     * 环绕通知特点：
-     1)编写：
-     a)方法的返回值为Object.
-     b)方法参数为ProceedingJoinPoint类型.
-     c)方法抛出异常为throwable.
-     2)应用：
-     a)目标方法执行之前或之后都可以进行功能拓展
-     b)相对于其它通知优先级最高。
-     @param jp 为一个连接对象(封装了正在要执行的目标方法信息)
-     @return 目标方法的执行结果
+    //@Pointcut("bean(sysUserServiceImpl)")
+    @Pointcut("@annotation(cn.tedu.common.annotation.RequiredLog)")
+    public void doLogPointCut() {
+        //方法体不需要写任何内容
+    }
+    /**
+     * @Around 注解描述的方法为一个通知方法，在这个方法内部可以通过连接点
+     * 对象（ProceedingJoinPoint）调用目标方法，并在目标方法对象执行之前
+     * 或之后添加额外功能。
+     *
+     * @Around 注解描述的方法有一定要求：
+     * 1)返回值类型为Object
+     * 2)方法参数类型为ProceedingJoinPoint类型
+     * 3)方法抛出throwable异常(建议)
+     * @param jp 封装了正要执行的目标方法信息
+     * @return 方法返回值为目标方法的执行结果
+     * @throws Throwable
      */
-    @Around(value="doLogPointCut()")
+    @Around("doLogPointCut()")
     public Object around(ProceedingJoinPoint jp)throws Throwable{
-        System.out.println("SysLogAspect.@Around.before");
-        long start=System.currentTimeMillis();
-        log.info("method start {}",start);
+        long t1=System.currentTimeMillis();
+        log.info("start：{}",t1);//{}在这里表示占位符
         try {
-            Object result=jp.proceed();//最终会执行目标方法(sysUserServiceImpl对象中的方法)
-            long end=System.currentTimeMillis();
-            log.info("method end {}",end);
-            System.out.println("SysLogAspect.Around.after");
-            //将用户的正常的行为信息写入到数据库
-            saveUserLog(jp,(end-start));
+            Object result=jp.proceed();//调用本类内部切入点对应其它通知或其它切面或目标方法。
+            long t2=System.currentTimeMillis();
+            log.info("end: {}",t2);
+            saveLog(jp,(t2-t1));//记录正常行为日志
             return result;
-        }catch(Throwable e) {
-            log.error("method error {},error msg is {}",
-                    System.currentTimeMillis(),e.getMessage());
+        }catch (Throwable e) {
+            log.error("error end: {}",e.getMessage());
+            //可以在此位置记录异常行为日志
+            //return null;
             throw e;
         }
     }
-    @Resource
+
+    @Autowired
     private SysLogsService sysLogsService;
-    private void saveUserLog(ProceedingJoinPoint jp,long time)throws Exception {
-        //1.获取用户行为日志信息
-        //获取目标对象(要执行的那个目标业务对象)类型
-        Class<?> targetCls=jp.getTarget().getClass();
-        //获取方法签名对象(此对象中封装了要执行的目标方法信息)
-        MethodSignature ms=(MethodSignature) jp.getSignature();
-        //获取目标方法对象，基于此对象获取方法上的RequiredLog注解，进而取到操作名
-        Method targetMethod=targetCls.getMethod(ms.getName(),ms.getParameterTypes());
-        RequiredLog required=targetMethod.getAnnotation(RequiredLog.class);
-        //获取操作名
-        String operation="operation";
-        if(required!=null) {//注解方式的切入点无须做此判断
-            operation=required.value();
-        }
-        //获取目标方法类全名
-        String targetMethodName=targetCls.getName()+"."+ms.getName();
-        //2.构建用户行为日志对象封装用户行为信息
+    /**
+     * 保存用户行为信息
+     * @param jp 连接点对象，此对象封装了要执行的目标方法信息
+     * @param time
+     * @throws SecurityException
+     * @throws NoSuchMethodException
+     * @throws JsonProcessingException
+     */
+    private void saveLog(ProceedingJoinPoint jp,long time) throws NoSuchMethodException, SecurityException, JsonProcessingException {
+        //1.获取用户行为信息
+        //1.1获取目标方法对象
+        Method targetMethod=getTargetMethod(jp);
+        //1.2获取目标方法的方法名信息
+        String targetMethodName=
+                targetMethod.getDeclaringClass().getName()+"."+targetMethod.getName();
+        //1.3获取目标方法上的操作名
+        String operation = getOperation(targetMethod);
+        //1.4 目标方法参数(转换为字符串)
+        //String params=Arrays.toString(jp.getArgs());
+        String params=
+                //将参数对象转换为json格式字符串
+                new ObjectMapper().writeValueAsString(jp.getArgs());
+        //2.封装用户行为信息
         SysLogs log=new SysLogs();
         log.setIp(IPUtils.getIpAddr());
-        log.setUsername("liuqing");//将来的登陆用户，现在可以先写个假数据
-        log.setOperation(operation);//不知道该写什么
-        log.setMethod(targetMethodName);//类全名.方法名
-        log.setParams(Arrays.toString(jp.getArgs()));
+        log.setUsername(ShiroUtils.getUsername());//后续做完登陆以后，为登陆用户名
+        log.setOperation(operation);
+        log.setMethod(targetMethodName);
+        log.setParams(params);
         log.setTime(time);
-        log.setCreatedTime(new java.util.Date());
-        //3.用户行为日志写入到数据库
+        log.setCreatedTime(new Date());
+        //3.保存用户行为信息
         sysLogsService.saveObject(log);
+
+//		new Thread() {//频繁创建和销毁线程也会占用资源
+//			public void run() {
+//				sysLogService.saveObject(log);
+//			};
+//		}.start();
     }
-
+    //获取目标方法
+    private Method getTargetMethod(ProceedingJoinPoint jp) throws NoSuchMethodException, SecurityException {
+        Class<?> targetCls=jp.getTarget().getClass();
+        MethodSignature ms=(MethodSignature)jp.getSignature();
+        //获取目标方法
+        Method targetMethod=//目标方法(类全名+方法名)
+                targetCls.getDeclaredMethod(ms.getName(),ms.getParameterTypes());
+        return targetMethod;
+    }
+    //获取操作名
+    private String getOperation(Method targetMethod) {
+        String operation="operation";
+        RequiredLog requiredLog=
+                targetMethod.getAnnotation(RequiredLog.class);
+        if(requiredLog!=null) {
+            operation=requiredLog.value();
+        }
+        return operation;
+    }
 }
-
-

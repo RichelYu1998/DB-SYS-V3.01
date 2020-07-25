@@ -5,6 +5,7 @@ import cn.tedu.sys.dao.SysLogsDao;
 import cn.tedu.sys.entity.PageObject;
 import cn.tedu.sys.entity.SysLogs;
 import cn.tedu.sys.service.SysLogsService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -104,7 +105,7 @@ public class SysLogsServiceImpl implements SysLogsService {
         //说明：构建对象时，参数的顺序是怎样的要结合你的构造方法的定义
         return new PageObject<>(pageCurrent, pageSize, rowCount, records);
     }
-
+    @RequiresPermissions("sys:log:delete")
     @Override
     public int deleteObjects(Integer... ids) {
         //1.参数校验

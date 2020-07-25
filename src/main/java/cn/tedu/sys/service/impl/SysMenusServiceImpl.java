@@ -7,6 +7,8 @@ import cn.tedu.sys.dao.SysRoleMenusDao;
 import cn.tedu.sys.entity.SysMenus;
 import cn.tedu.sys.service.SysMenusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
@@ -89,6 +91,7 @@ public class SysMenusServiceImpl implements SysMenusService {
     /*
      * 菜单记录查询
      * */
+    @Cacheable(value = "menuCache")
     @Override
     public List<Map<String, Object>> findObjects() {
         List<Map<String, Object>> list = sysMenusDao.findObjects();
@@ -100,6 +103,7 @@ public class SysMenusServiceImpl implements SysMenusService {
     /*
      * 基于 id 进行菜单删除
      * */
+    @CacheEvict(value = "menuCache",allEntries = true)
     @Override
     public int deleteObject(Integer id) {
         //1.验证数据的合法性
@@ -128,6 +132,7 @@ public class SysMenusServiceImpl implements SysMenusService {
     /*
      * 保存菜单对象
      * */
+    @CacheEvict(value = "menuCache",allEntries = true)
     @Override
     public int saveObject(SysMenus entity) {
         //1.合法验证
@@ -150,6 +155,7 @@ public class SysMenusServiceImpl implements SysMenusService {
     /*
      *菜单保存
      * */
+    @CacheEvict(value = "menuCache",allEntries = true)
     @Override
     public int updateObject(SysMenus entity) {
         //1.合法验证

@@ -1,5 +1,7 @@
 package cn.tedu.common.config;
 
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -13,10 +15,11 @@ import java.util.LinkedHashMap;
 @Configuration
 public class SpringShiroConfig {
     @Bean
-    public SecurityManager securityManager(Realm realm) {
+    public SecurityManager securityManager(Realm realm,CacheManager cacheManager) {
         DefaultWebSecurityManager sManager=
                 new DefaultWebSecurityManager();
         sManager.setRealm(realm);
+        sManager.setCacheManager(cacheManager);
         return sManager;
     }
     @Bean
@@ -35,7 +38,7 @@ public class SpringShiroConfig {
         map.put("/doLogout","logout");
         /*map.put("/doIndexUI","anon");*/
         //除了匿名访问的资源,其它都要认证("authc")后访问
-        map.put("/**","authc");
+        map.put("/**","user");//authc
         sfBean.setFilterChainDefinitionMap(map);
         return sfBean;
     }
@@ -48,4 +51,9 @@ public class SpringShiroConfig {
         advisor.setSecurityManager(securityManager);
         return advisor;
     }
+    @Bean
+    protected CacheManager shiroCacheManager() {
+        return new MemoryConstrainedCacheManager();
+    }
+
 }

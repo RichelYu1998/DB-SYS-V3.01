@@ -89,16 +89,15 @@ public class SysUsersController {
     * 处理登陆
     * */
     @RequestMapping("doLogin")
-    public JsonResult doLogin(String username,String password){
-        //1.获取 Subject 对象
-        Subject subject = SecurityUtils.getSubject();
-        //2.通过 Subject 提交用户信息,交给 shiro 框架进行认证操作
-        //2.1 对用户进行封装
-        UsernamePasswordToken token = new UsernamePasswordToken(
-                username,//身份信息
-                password);//凭证信息
-        //2.2 对用户信息进行身份认证
-        subject.login(token);
+    public JsonResult doLogin(boolean isRememberMe, String username, String password){
+        UsernamePasswordToken token=
+                new UsernamePasswordToken(username, password);
+        if(isRememberMe) {
+            token.setRememberMe(true);
+        }
+    //2.提交用户信息
+        Subject subject=SecurityUtils.getSubject();
+        subject.login(token);//token 会提交给 securityManager
         return new JsonResult("login ok");
     }
 }

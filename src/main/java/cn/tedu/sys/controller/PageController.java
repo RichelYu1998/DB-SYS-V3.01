@@ -1,6 +1,9 @@
 package cn.tedu.sys.controller;
 
+import cn.tedu.common.util.ShiroUtils;
+import cn.tedu.sys.entity.SysUsers;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -9,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 public class PageController {
     @RequestMapping("doIndexUI")
-    public String doIndexUI() {
+    public String doIndexUI(Model model) {
+        SysUsers user = ShiroUtils.getUser();
+        model.addAttribute("user",user);
         /*
          * 起始页面
          * */

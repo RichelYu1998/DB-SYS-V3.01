@@ -1,6 +1,7 @@
 package cn.tedu.sys.dao;
 
 import cn.tedu.common.vo.Node;
+import cn.tedu.common.vo.SysUserMenuVo;
 import cn.tedu.sys.entity.SysMenus;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -95,4 +96,11 @@ public interface SysMenusDao {
     * 基于菜单 id 查找权限标识
     * */
     List<String> findPermissions(@Param("menuIds") Integer[] menuIds);
+    /**
+     * 基于菜单获取菜单信息
+     * @param menuIds
+     * @return
+     */
+    List<SysUserMenuVo> findMenusByIds(
+            @Param("menuIds")List<Integer> menuIds);
 }

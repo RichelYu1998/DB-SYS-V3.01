@@ -1,20 +1,32 @@
 package cn.tedu.sys.controller;
 
 import cn.tedu.common.util.ShiroUtils;
+
+import cn.tedu.common.vo.SysUserMenuVo;
+import cn.tedu.sys.dao.SysMenusDao;
 import cn.tedu.sys.entity.SysUsers;
+import cn.tedu.sys.service.SysMenusService;
+import cn.tedu.sys.service.SysUsersService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 @Controller
 @RequestMapping("/")
 
 public class PageController {
+    @Resource
+    private SysMenusService sysMenusService;
     @RequestMapping("doIndexUI")
     public String doIndexUI(Model model) {
         SysUsers user = ShiroUtils.getUser();
-        model.addAttribute("user",user);
+        model.addAttribute("username",user.getUsername());
+        List<SysUserMenuVo> userMenus = sysMenusService.findUserMenusByUserId(user.getId());
+        model.addAttribute("userMenus",userMenus);
         /*
          * 起始页面
          * */

@@ -1,6 +1,7 @@
 package cn.tedu.sys.service;
 
 import cn.tedu.common.vo.Node;
+import cn.tedu.common.vo.SysUserMenuVo;
 import cn.tedu.sys.entity.SysMenus;
 
 import java.util.List;
@@ -74,5 +75,5 @@ public interface SysMenusService {
     * 更新菜单
     * */
     int updateObject(SysMenus entity);
-    
+    List<SysUserMenuVo> findUserMenusByUserId(Integer id);
 }

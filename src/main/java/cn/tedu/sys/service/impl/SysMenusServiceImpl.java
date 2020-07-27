@@ -2,8 +2,10 @@ package cn.tedu.sys.service.impl;
 
 import cn.tedu.common.exception.ServiceException;
 import cn.tedu.common.vo.Node;
+import cn.tedu.common.vo.SysUserMenuVo;
 import cn.tedu.sys.dao.SysMenusDao;
 import cn.tedu.sys.dao.SysRoleMenusDao;
+import cn.tedu.sys.dao.SysUserRolesDao;
 import cn.tedu.sys.entity.SysMenus;
 import cn.tedu.sys.service.SysMenusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,9 @@ public class SysMenusServiceImpl implements SysMenusService {
     @Resource
     private SysMenusDao sysMenusDao;
     @Resource
-    private SysRoleMenusDao sysRoleMenuDao;
+    private SysRoleMenusDao sysRoleMenusDao;
+    @Resource
+    private SysUserRolesDao sysUserRolesDao;
 
 
     /**
@@ -114,7 +118,7 @@ public class SysMenusServiceImpl implements SysMenusService {
         if (count > 0)
             throw new ServiceException("请先删除子菜单");
         //3.删除角色,菜单关系数据
-        int rows = sysRoleMenuDao.deleteObjectsByMenuId(id);
+        int rows = sysRoleMenusDao.deleteObjectsByMenuId(id);
         if (rows == 0)
             throw new ServiceException("此菜单可能已经不存在");
         //5.返回结果
@@ -169,5 +173,16 @@ public class SysMenusServiceImpl implements SysMenusService {
             throw new ServiceException("记录可能已经不存在");
         //3.返回数据
         return rows;
+    }
+
+    @Override
+    public List<SysUserMenuVo> findUserMenusByUserId(Integer id) {
+        //1.对用户 id 进行判断
+        //2.基于用户 id 查找用户对应的角色 id
+        List<Integer> roleIds = sysUserRolesDao.findRoleIdsByUserId(id);
+        //3.基于角色 id 获取角色对应的菜单信息,并进行封装.
+        List<Integer> menuIds = sysRoleMenusDao.findMenuIdsByRoleIds(roleIds.toArray(new Integer[]{}));
+        //4.基于菜单 id 获取用户对应的菜单信息并返回
+        return sysMenusDao.findMenusByIds(menuIds);
     }
 }
